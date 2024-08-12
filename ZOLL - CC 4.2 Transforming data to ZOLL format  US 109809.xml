@@ -1,0 +1,86 @@
+<xsl:template name="SetRunNumber">
+    <xsl:param name="Agency"/>
+    <xsl:param name="DepartmentName"/>
+    <xsl:variable name="Last_Agency_CaseNumber">
+        <xsl:for-each select="Body/s0:CallEntry/s0:Responders/s0:Agency[child::*[local-name()='Agency' and text() = $Agency] and child::*[local-name()='DepartmentName' and text() = $DepartmentName]]/s0:AgencyCaseNumbers">
+            <xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+            <xsl:if test="position() = 1">
+                <xsl:value-of select="./s0:CaseNumber"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="CaseNumber1">
+        <xsl:value-of select="translate($Last_Agency_CaseNumber, '-','')"/>
+    </xsl:variable>
+    <xsl:element name="RunNumber">
+        <xsl:value-of select="substring($CaseNumber1,string-length($CaseNumber1)-7)"/>
+    </xsl:element>
+</xsl:template>
+
+
+<xsl:template name="SetIncidentNumber">
+	<xsl:param name="Agency" />
+	<xsl:param name="DepartmentName" />
+	<xsl:variable name="CaseNumber">
+		<xsl:for-each select="Body/s0:CallEntry/s0:Responders/s0:Agency[child::*[local-name()='Agency' and text() = $Agency] and child::*[local-name()='DepartmentName' and text() = $DepartmentName]]/s0:AgencyCaseNumbers">
+			<xsl:sort select="./s0:Sequence" order="descending" data-type="number" />
+			<xsl:if test="position() = 1">
+				<xsl:value-of select="./s0:CaseNumber" />
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:variable>
+	<xsl:variable name="part1" >
+		<xsl:value-of select="substring-before($CaseNumber, '-')" />	
+	</xsl:variable>
+	<xsl:variable name="part2" >
+		<xsl:value-of select="substring-after($CaseNumber, '-')" />	
+	</xsl:variable>
+	<xsl:element name="IncidentNumber">
+		<xsl:value-of select="substring($part1, string-length($part1) - 1)" /><xsl:value-of select="substring($part2, string-length($part2) - 4)" />	
+	</xsl:element>
+</xsl:template>
+
+<xsl:template name="SetZone">
+    <xsl:param name="DepartmentName"/>    
+        <xsl:element name="Zone">
+            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments' ]/*[local-name()='Department' and child::*[local-name()='DepartmentID' and text()=$DepartmentName]]/*[contains(local-name(), 'ZoneFieldLevel') and text()!=''][last()-1]/text()"/>
+        </xsl:element>    
+</xsl:template>
+
+<xsl:template name="SetCensusTrack">
+    <xsl:param name="DepartmentName"/>    
+        <xsl:element name="CensusTrack">
+            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments' ]/*[local-name()='Department' and child::*[local-name()='DepartmentID' and text()=$DepartmentName]]/*[contains(local-name(), 'ZoneFieldLevel') and text()!=''][last()]/text()"/>
+        </xsl:element>    
+</xsl:template>
+
+<xsl:template name="SetDropOffAddress">
+  <xsl:param name="Node"/>
+  <xsl:param name="Status"/>
+  <xsl:param name="SortOrder" />
+	<xsl:element name="{$Node}">
+		<xsl:for-each select="./s0:UnitStatus/s0:Status[contains($Status, concat('*',text(),'*'))]/.." >
+			<xsl:sort select="./s0:Sequence" order="{$SortOrder}" data-type="number" />
+			<xsl:if test="position() = 1">
+				<xsl:element name="StreetAddress">
+					<xsl:value-of select="./s0:FullAddress" />
+				</xsl:element>
+				<xsl:element name="ZipCode">
+					<xsl:value-of select="./s0:ZipCode" />
+				</xsl:element>
+				<xsl:element name="City">
+					<xsl:value-of select="./s0:City" />
+				</xsl:element>
+				<xsl:element name="FacilityName">
+					<xsl:value-of select="./s0:CommonName" />
+				</xsl:element>
+				<xsl:element name="Zone">
+					<xsl:value-of select="./*[contains(local-name(), 'ZoneFieldLevel') and text()!=''][last()-1]/text()" />
+				</xsl:element>
+                <xsl:element name="CensusTrack">
+					<xsl:value-of select="./*[contains(local-name(), 'ZoneFieldLevel') and text()!=''][last()]/text()" />
+				</xsl:element>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:element>
+</xsl:template>

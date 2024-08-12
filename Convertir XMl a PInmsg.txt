@@ -1,0 +1,11 @@
+ XmlSerializer serializer = new XmlSerializer(typeof(LiveCAD));
+
+            MemoryStream ms = new MemoryStream();//creo un memorystream
+            serializer.Serialize(ms, livecad);//serializa en el Xml, el objeto en forma de memorystream
+            ms.Flush();
+            ms.Position = 0;
+
+            TraceManager.PipelineComponent.TraceInfo(string.Format("{0} - Se serializó el resultado", ScopeName));
+
+            pInMsg.BodyPart.Data = ms;
+return pInMsg;

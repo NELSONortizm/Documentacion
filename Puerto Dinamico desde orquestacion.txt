@@ -1,0 +1,2 @@
+PortOut_ResponseSMS(Microsoft.XLANGs.BaseTypes.Address)=@"C:\Pruebas\SMS_RESPONSE\BAD_CREDENTIALS\%MessageID%.xml";
+PortOut_ResponseSMS(Microsoft.XLANGs.BaseTypes.TransportType)="FILE";

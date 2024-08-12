@@ -1,0 +1,15 @@
+When user from Mobile run a report
+
+--message sent is received in RL of Mobiletec.Routing Application
+--Por RL has a Pipeline set. and in its configuration this PiPeline call some Rules  -- > BRI:\\policy=MobileTec.Routing.SelectItinerary;useMsg=True
+--Rule MobileTec.Routing.SelectItinerary: according the message content sent, is analyzed by the rule.
+                                          For example if according the content is run the rule for Mobile_RMS
+
+--Policy Mobile_RMS: this rule calls an Itinerary named Mobiletec.Routing.LocalReportRW
+
+---Mobiletec.Routing.LocalReportRW itinerary calls an orquestration named MobileTec.Routing.Orchestrations.ProcessingReportToServerReportWriter (Internally during execution this orch will calls two rules Mobiletec.Routing.UploadReportRMS.SelectRoute
+   and Mobiletec.Routing.UploadReportRWS.SelectRoute)
+
+--- MobileTec.Routing.Orchestrations.ProcessingReportToServerReportWriter
+
+--Dynamic ports configuration is done during running according the conditions set in the orchestration

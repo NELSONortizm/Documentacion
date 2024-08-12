@@ -1,0 +1,9 @@
+<xsl:template name="SetXmlText">
+	<ESB_SP_SAVE_CAD_EVENT xmlns="http://schemas.microsoft.com/Sql/2008/05/Procedures/dbo">
+		<CadMessage>
+			<xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>			
+			<xsl:copy-of select="/s1:CAD_Message"/>
+			<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
+		</CadMessage>
+	</ESB_SP_SAVE_CAD_EVENT>
+</xsl:template>

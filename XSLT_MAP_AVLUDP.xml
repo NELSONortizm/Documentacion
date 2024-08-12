@@ -1,0 +1,30 @@
+
+<xsl:template name="SetAVLUDP">
+<xsl:param name="usercodepar"/>
+<xsl:param name="jurisdictionpar"/>
+<xsl:param name="messagebodypar"/>
+<ns0:ProcessMessageBiztalk xmlns:ns0="http://tempuri.org/" xmlns:ns1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+    <ns0:data>
+        <ns1:KeyValueOfstringstring>
+            <ns1:Key>usercode</ns1:Key>            
+            <ns1:Value><xsl:value-of select="$usercodepar"/></ns1:Value>
+        </ns1:KeyValueOfstringstring>
+        <ns1:KeyValueOfstringstring>
+            <ns1:Key>MessageType</ns1:Key>
+            <ns1:Value>GPS</ns1:Value>
+        </ns1:KeyValueOfstringstring>
+        <ns1:KeyValueOfstringstring>
+            <ns1:Key>jurisdiction</ns1:Key>
+            <ns1:Value><xsl:value-of select="$jurisdictionpar"/></ns1:Value>
+        </ns1:KeyValueOfstringstring>
+        <ns1:KeyValueOfstringstring>
+            <ns1:Key>NMMESSAGE_ID</ns1:Key>
+            <ns1:Value>0</ns1:Value>
+        </ns1:KeyValueOfstringstring>
+        <ns1:KeyValueOfstringstring>
+            <ns1:Key>MessageBody</ns1:Key>
+            <ns1:Value><xsl:value-of select="$messagebodypar"/></ns1:Value>
+        </ns1:KeyValueOfstringstring>
+    </ns0:data>
+</ns0:ProcessMessageBiztalk>
+</xsl:template>

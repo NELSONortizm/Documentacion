@@ -1,0 +1,6 @@
+https://docs.microsoft.com/en-us/biztalk/technical-guides/checklist-maintaining-and-troubleshooting-biztalk-server-databases
+
+
+Best Practices for Maintaining BizTalk Server Databases
+
+Large-growing BizTalk Server Database Tables

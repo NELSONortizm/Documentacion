@@ -1,0 +1,8 @@
+BUSCA EL NODO DEPARTAMENTO DENTRO DE ASSOCIATEDEPARTMENTS Y L COMPARA CON EL DEPARTAMENTO DEL HEADER. SI ES IGUAL EXTRAER EL CALLTYPE
+
+/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentName' and text()= /*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='DepartmentName']]]/*[local-name()='CallType']
+
+Luego selecciona el Schmema selecciona el nodo CallType, y en Properties en el xPath Selector coloca el anterior xPath, y en Xpath Field coloca un punto (.)  que representa el valor de ese xpath.
+
+
+

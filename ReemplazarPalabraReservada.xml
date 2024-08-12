@@ -1,0 +1,93 @@
+<xsl:template name="Templ_ReemplazarPalabraReservada">
+    <xsl:param name="param_texto"/>
+    <xsl:param name="param_nodo"/>
+    <xsl:param name="par_departmentId"/>
+    <xsl:param name="lista_agenciasParametro"/>
+    <xsl:element name="{$param_nodo}">        
+        <xsl:variable name="lista_agencias" select="ScriptNS1:construir_lista_agencia($lista_agenciasParametro)"/>
+        <xsl:variable name="GetAgencyNames">
+            <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Agency']/*[local-name()='Agency' and (contains($lista_agencias, concat('*', text(), '*')) or $lista_agencias='' )]/../*[local-name()='AgencyName']">
+                <xsl:value-of select="concat('*', .)"/>
+            </xsl:for-each>*            
+        </xsl:variable>
+        <xsl:variable name="unitlist">
+            <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='AgencyName' and contains($GetAgencyNames,concat('*',text(),'*'))]/../*[local-name()='UnitName']/../*[local-name()='UnitStatus']/./*[local-name()='Status' and text()='DI']/..">
+                <xsl:sort select="./s0:StatusDate" order="ascending" data-type="text"/>
+                <xsl:value-of select="./s0:UnitName"/>
+                <xsl:if test="position() &lt; last()">,</xsl:if>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:variable name="Common">
+            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='Common']"/>
+        </xsl:variable>
+        <xsl:variable name="FullAddress">
+            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='FullAddress']"/>
+        </xsl:variable>
+        <xsl:variable name="CrossStreet1">
+            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='CrossStreet1']"/>
+        </xsl:variable>
+        <xsl:variable name="CrossStreet2">
+            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='CrossStreet2']"/>
+        </xsl:variable>
+        <xsl:variable name="Zone">
+            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments' ]/*[local-name()='Department' and child::*[local-name()='DepartmentID' and text()=$par_departmentId]]/*[contains(local-name(), 'ZoneFieldLevel') and text()!=''][last()]/text()"/>
+        </xsl:variable>
+        <xsl:variable name="Location">
+            <xsl:value-of select="ScriptNS1:ConstruirLocation($Common,$FullAddress,$CrossStreet1,$CrossStreet2,$Zone)"/>
+        </xsl:variable>
+        <xsl:variable name="LastUnitName">
+            <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']/*[local-name()='StatusDate']">
+                <xsl:sort order="descending"/>
+                <xsl:if test="position()=1">
+                    <xsl:value-of select="../*[local-name()='UnitName']"/>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:variable name="narrativas">
+            <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='Narrative']">
+                <xsl:sort select="./s0:Sequence" order="ascending" data-type="number"/>
+                <xsl:variable name="narrativa" select="./s0:Narrative"/>
+                <xsl:choose>
+                    <xsl:when test="substring($narrativa, string-length($narrativa),1) != '.' and substring($narrativa, string-length($narrativa),1) != ',' ">
+                        <xsl:value-of select="concat($narrativa,'. ')"/>
+                    </xsl:when>
+                    <xsl:when test="substring($narrativa, string-length($narrativa),1) = '.' or substring($narrativa, string-length($narrativa),1) = ',' ">
+                        <xsl:value-of select="concat($narrativa,' ')"/>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:variable name="received" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='Received']"/>
+        <xsl:variable name="texto1" select="ScriptNS1:ReemplazarPalabraReservada('[EVENT#]',/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='EventNumber'],$param_texto)"/>
+        <xsl:variable name="texto2" select="ScriptNS1:ReemplazarPalabraReservada('[CALLTYPE]',/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentID' and text()=$par_departmentId]]/*[local-name()='CallType'],$texto1)"/>
+        <xsl:variable name="texto3" select="ScriptNS1:ReemplazarPalabraReservada('[CALLTYPEDESC]',/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentID' and text()=$par_departmentId]]/*[local-name()='CallTypeDescription'],$texto2)"/>
+        <xsl:variable name="texto4" select="ScriptNS1:ReemplazarPalabraReservada('[RECDATETIME]',concat(substring($received,1,10),' ',substring($received,12,8)),$texto3)"/>
+        <xsl:variable name="texto5" select="ScriptNS1:ReemplazarPalabraReservada('[ESPACE]',' ',$texto4)"/>
+        <xsl:variable name="texto6" select="ScriptNS1:ReemplazarPalabraReservada('[LINE_JUMP]','NewLine',$texto5)"/>
+        <xsl:variable name="texto7" select="ScriptNS1:ReemplazarPalabraReservada('[TAB]','Tab',$texto6)"/>
+        <xsl:variable name="texto8" select="ScriptNS1:ReemplazarPalabraReservada('[LOCATION]',$Location,$texto7)"/>
+        <xsl:variable name="texto9" select="ScriptNS1:ReemplazarPalabraReservada('[UNIT]',$LastUnitName,$texto8)"/>
+        <!--  ** -->
+        <xsl:variable name="texto10" select="ScriptNS1:ReemplazarPalabraReservada(concat('[ASSIGNED_UNITS:',$lista_agenciasParametro, ']'),$unitlist,$texto9)"/>
+        <!-- ** -->
+        <xsl:variable name="texto11" select="ScriptNS1:reemplazar_narrativa($narrativas, $texto10)"/>
+        <xsl:value-of select="$texto11"/>
+    </xsl:element>
+</xsl:template>
+
+
+public string ReemplazarPalabraReservada(string reservada, string valornodo, string cadena)
+        {
+
+            if (valornodo == "NewLine")
+            {
+                valornodo = Environment.NewLine;
+
+            }
+            if (valornodo == "Tab")
+            {
+                valornodo = "\t";
+            }
+            cadena = cadena.Replace(reservada, valornodo);
+            return cadena;
+        }

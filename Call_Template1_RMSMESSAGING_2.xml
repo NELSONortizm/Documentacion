@@ -1,0 +1,211 @@
+<!-- This template accepts three inputs and creates the destination 
+"Property" node.  Inside the template, it calls another template which 
+builds up the potentially repeating "Value" child node -->
+<xsl:template name="WritePropertyNodeTemplate">
+	<xsl:param name="Version"/>
+	<xsl:param name="Source"/>
+	<xsl:param name="Target"/>
+	<xsl:param name="Agency"/>
+	<xsl:param name="Department"/>
+	<xsl:param name="Endpoint"/>
+	<xsl:param name="CreationDate"/>
+	<xsl:param name="Subject"/>
+	<xsl:param name="Message"/>
+	<xsl:param name="Urgent"/>
+	<xsl:param name="MessageType"/>
+	<xsl:param name="MessageSubType"/>
+	<xsl:param name="AgentId"/>
+	<xsl:param name="AgentName"/>
+	<xsl:param name="AgentWorkstation"/>
+	<xsl:param name="AgentDepartment"/>
+	<xsl:param name="AgentAgency"/>
+	<xsl:param name="Role"/>
+	<xsl:param name="SendTo"/>
+	<xsl:param name="Destination"/>
+	<xsl:param name="PlaceDescription"/>
+	<!-- create property node -->
+	<xsl:element name="CAD_Messaging_DataContract_Envelope" namespace="http://MobileTec.BizTalk.Cad.Messaging.Schemas.CAD_Messaging_DataContract_Envelope">
+		<!-- call splitter template which accepts the "|" separated string -->
+		<xsl:call-template name="StringSplit">
+			<xsl:with-param name="val" select="$SendTo"/>
+		</xsl:call-template>
+	</xsl:element>
+</xsl:template>
+<!-- This template accepts a string and pulls out the value before the 
+designated delimiter -->
+<xsl:template name="StringSplit">
+	<xsl:param name="val"/>
+	<!-- do a check to see if the input string (still) has a "|" in it -->
+	<xsl:choose>
+		<xsl:when test="contains($val, ',')">
+			<!-- pull out the value of the string before the "," delimiter -->
+			<xsl:element name="CAD_Messaging_DataContractWithHeader" namespace="http://MobileTec.BizTalk.Cad.Messaging.Schemas.CAD_Messaging_DataContractWithHeader">
+				<Header>
+					<Version>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='Version']"/>
+					</Version>
+					<Source>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='Source']"/>
+					</Source>
+					<Target>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='Target']"/>
+					</Target>
+					<Agency>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='Agency']"/>
+					</Agency>
+					<Department>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='Department']"/>
+					</Department>
+					<EndPoint>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='EndPoint']"/>
+					</EndPoint>
+				</Header>
+				<Body>
+					<xsl:element name="Messages" namespace="http://MobileTec.BizTalk.Cad.Messaging.Schemas.CAD_Messaging_DataContract">
+						<Message>
+							<CreationDate>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='CreationDate']"/>
+							</CreationDate>
+							<Subject>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='Subject']"/>
+							</Subject>
+							<Message>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='Message']"/>
+							</Message>
+							<Urgent>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='Urgent']"/>
+							</Urgent>
+							<MessageType>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='MessageType']"/>
+							</MessageType>
+							<MessageSubType>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='MessageSubType']"/>
+							</MessageSubType>
+						</Message>
+						<Sender>
+							<Agent>
+								<AgentId>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentId']"/>
+								</AgentId>
+								<AgentName>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentName']"/>
+								</AgentName>
+								<AgentWorkstation>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentWorkstation']"/>
+								</AgentWorkstation>
+								<AgentDepartment>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentDepartment']"/>
+								</AgentDepartment>
+								<AgentAgency>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentAgency']"/>
+								</AgentAgency>
+								<Role>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='Role']"/>
+								</Role>
+							</Agent>
+						</Sender>
+						<Recipient>
+							<SendTo>
+								<xsl:value-of select="substring-before($val, ',')"/>
+							</SendTo>
+							<Destination>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Recipient']/*[local-name()='Destination']"/>
+							</Destination>
+							<PlaceDescription>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Recipient']/*[local-name()='PlaceDescription']"/>
+							</PlaceDescription>
+						</Recipient>
+					</xsl:element>
+				</Body>
+			</xsl:element>
+			<!-- recursively call this template and pass in 
+value AFTER the "|" delimiter -->
+			<xsl:call-template name="StringSplit">
+				<xsl:with-param name="val" select="substring-after($val, ',')"/>
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+			<!-- if there is no more delimiter values, print out 
+the whole string -->
+			<xsl:element name="CAD_Messaging_DataContractWithHeader" namespace="http://MobileTec.BizTalk.Cad.Messaging.Schemas.CAD_Messaging_DataContractWithHeader">
+				<Header>
+					<Version>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='Version']"/>
+					</Version>
+					<Source>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='Source']"/>
+					</Source>
+					<Target>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='Target']"/>
+					</Target>
+					<Agency>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='Agency']"/>
+					</Agency>
+					<Department>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='Department']"/>
+					</Department>
+					<Endpoint>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Header']/*[local-name()='EndPoint']"/>
+					</Endpoint>
+				</Header>
+				<Body>
+					<xsl:element name="Messages" namespace="http://MobileTec.BizTalk.Cad.Messaging.Schemas.CAD_Messaging_DataContract">
+						<Message>
+							<CreationDate>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='CreationDate']"/>
+							</CreationDate>
+							<Subject>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='Subject']"/>
+							</Subject>
+							<Message>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='Message']"/>
+							</Message>
+							<Urgent>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='Urgent']"/>
+							</Urgent>
+							<MessageType>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='MessageType']"/>
+							</MessageType>
+							<MessageSubType>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='MessageSubType']"/>
+							</MessageSubType>
+						</Message>
+						<Sender>
+							<Agent>
+								<AgentId>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentId']"/>
+								</AgentId>
+								<AgentName>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentName']"/>
+								</AgentName>
+								<AgentWorkstation>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentWorkstation']"/>
+								</AgentWorkstation>
+								<AgentDepartment>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentDepartment']"/>
+								</AgentDepartment>
+								<AgentAgency>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentAgency']"/>
+								</AgentAgency>
+								<Role>
+									<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='Role']"/>
+								</Role>
+							</Agent>
+						</Sender>
+						<Recipient>
+							<SendTo>
+								<xsl:value-of select="$val"/>
+							</SendTo>
+							<Destination>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Recipient']/*[local-name()='Destination']"/>
+							</Destination>
+							<PlaceDescription>
+								<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Recipient']/*[local-name()='PlaceDescription']"/>
+							</PlaceDescription>
+						</Recipient>
+					</xsl:element>
+				</Body>
+			</xsl:element>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>

@@ -1,0 +1,58 @@
+// Obtiene el itinerario actual.
+Itinerary.Itinerary = Microsoft.Practices.ESB.Itinerary.ItineraryOMFactory.Create(InputMessageMsg);
+ItineraryStep.ItineraryStep = Itinerary.Itinerary.GetItineraryStep(InputMessageMsg);
+
+InputMessageHeaderDTOMsg.MessageHeaderDTOPart=InputMessageMsg;
+
+ResolverCollection = ItineraryStep.ItineraryStep.ResolverCollection;
+
+sScopeName="Scope_SendingMobileCADBridgeService";
+iScopeStarted= Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceStartScope("TraceStartScope:"+sScopeName);
+
+//Obtiene el resolver actual.
+ResolverCollection.MoveNext();
+ResolverDictionaryString = ResolverCollection.Current;
+
+//Obtiene la configuración del resolver.
+ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(messageHeaderDTO, ResolverDictionaryString);
+
+//Obtiene las propiedades de transporte
+transportLocation = ResolverDictionary.Item("Resolver.TransportLocation");
+transportType = ResolverDictionary.Item("Resolver.TransportType");
+
+//Obtiene el mapa a usar.
+transformType = ResolverDictionary.Item("Resolver.TransformType");
+
+//Configura el puerto de envio.
+UploadMessageAport(Microsoft.XLANGs.BaseTypes.Address) = transportLocation;
+UploadMessageAport(Microsoft.XLANGs.BaseTypes.TransportType) = transportType;
+
+//Obtiene el mapa
+mapType = System.Type.GetType(transformType);
+
+//Ejecuta la transformación
+transform(uPloadMessageRequest) = mapType(messageHeaderDTO);
+
+uPloadMessageRequest(WCF.MaxReceivedMessageSize) = 2147483647;
+
+
+//Configura las propiedades necesarias para el adapter.
+Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(ResolverDictionary,uPloadMessageRequest);
+
+
+
+********************
+tracers
+
+gCallToken = Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceIn();
+
+iScopeStarted = Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceStartScope(sScopeName);
+
+Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceInfo("{0} - {1}",sOrchestrationName, System.String.Format("Receive Message: {0}", msg_in_string.Substring(0,tamano)));
+
+Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceEndScope(sScopeName, iScopeStarted, gCallToken);
+
+Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceError(ex,true,gCallToken);
+
+Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceEndScope(sScopeName, iScopeStarted, gCallToken);
+

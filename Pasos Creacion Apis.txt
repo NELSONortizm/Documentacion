@@ -1,0 +1,73 @@
+1. agregar modelo
+Agregar referencias de enntityFramework
+
+2. Dbcontext clase
+
+3. confgurar el connection string en appsettings.json
+
+ "ConnectionStrings": { "ConStringIntegraciones": "Server=localhost;Database=PocIntegraciones;User Id=sa;password=linKmobiL1;TrustServerCertificate=True;" },
+ "Logging": {
+
+4. Registrar el contexto en startup o program.cs
+
+//builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("name=ConnectionStrings:ConStringIntegraciones"));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConStringIntegraciones")));
+
+5. crear el controller con los metodos
+
+6 hacer migraciones
+
+Add-Migration InitialCreate
+Update-Database
+
+7  Dockerizar la Aplicación
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["IntegracionesApi/IntegracionesApi.csproj", "IntegracionesApi/"]
+RUN dotnet restore "IntegracionesApi/IntegracionesApi.csproj"
+COPY . .
+WORKDIR "/src/IntegracionesApi"
+RUN dotnet build "IntegracionesApi.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "IntegracionesApi.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "IntegracionesApi.dll"]
+
+8 Construir y Ejecutar el Contenedor
+
+Abre una terminal en la raíz de tu proyecto y ejecuta los siguientes comandos para construir y ejecutar la imagen de Docker:
+bash
+Copy code
+docker build -t integracionesapi .
+docker run -d -p 8080:80 integracionesapi
+
+8. Acceder a la API en Docker
+Accede a tu API en http://localhost:8080/api/integraciones.
+Con esto, has creado una API RESTful completa en ASP.NET Core, y la has dockerizado para su uso en contenedores. ¡Espero que esto te sea útil! Si tienes alguna pregunta o necesitas más detalles, no dudes en preguntar.
+
+
+***PASOS PARA CONSUMIRLO
+
+1. se crea el proyecto 
+Selecciona "ASP.NET Core Web Application".
+Dale un nombre al proyecto (por ejemplo, IntegracionesMvc).
+Selecciona ".NET 6.0 (o la versión que estés usando)" y elige "Web Application (Model-View-Controller)".
+
+2. Agregar el Modelo de Integración
+
+3. Agregar el Servicio para Consumir la API
+
+4. Configurar el Servicio en Startup.cs
+
+5. Crear el Controlador
+
+6 crear las vistas

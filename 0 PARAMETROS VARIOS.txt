@@ -1,0 +1,55 @@
+***SET TRANSFORM TYPE EN REGLA 
+NAME, ASSEMBLY
+
+Mobiletec.Biztalk.ANIALI.Positron.Maps.AniAli_Positron_to_PBXCanonical_CallData, Mobiletec.Biztalk.ANIALI.Positron.Maps, Version=1.0.0.0, Culture=neutral, PublicKeyToken=99312d8800696bf3
+
+
+
+***DOCUMENTSPECNAME EN PIPELINE
+
+NAME,ASSEMBLY
+
+Mobiletec.Biztalk.CloudGavel.Schemas.Warrants, Mobiletec.Biztalk.CloudGavel.Schemas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2d378f6994fa5581
+
+Prueba_AVLUDP.Schema.Pruebas_AVLUDP, Prueba_AVLUDP.Schema, Version=1.0.0.0, Culture=neutral, PublicKeyToken=89b1143800677d13
+
+Mobiletec.Biztalk.AniAli.Vesta.Pasco.Schemas.VestaPasco, Mobiletec.Biztalk.AniAli.Vesta.Pasco.Schemas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a88e1a5da0ed51ba
+
+Mobiletec.Biztalk.FD.Schemas.PostDispatchesEndPoint1_Schema, Mobiletec.Biztalk.FD.Schemas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f9d6997b8a15b797
+
+***CONTENTMESSAGE TYPE EN REGLAS
+EN LA CONSOLA SELECCIONE EL ESQUEMA
+
+
+TARGET NAMESPACE + # + ROOT
+http://schemas.microsoft.com/Sql/2008/05/TypedPolling/Events#TypedPolling
+
+
+***DOCUMENT SPECNAME DEL RECEIVE PIPELINE
+Prueba_AVLUDP.Schema.Pruebas_AVLUDP, Prueba_AVLUDP.Schema, Version=1.0.0.0, Culture=neutral, PublicKeyToken=89b1143800677d13
+
+
+***suscriptionmessagetype  del decode deun pipeline rec
+http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0#CAD_Message
+
+http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0
+#
+CAD_Message
+
+***ITINERARIO
+Resolver.Itinerary
+ITINERARY:\\name=Prueba_AVLUDP.Itinerary;version=1.0;
+BRI:\\policy=Mobiletec.Biztalk.Cad.Events.SelectItinerary;useMsg=True;
+
+
+***FILTROS DE SUSCRIPCION
+Microsoft.Practices.ESB.Itinerary.Schemas.ServiceName == SP.Mobiletec.Biztalk.CAD.Dynamic.SMS  And
+Microsoft.Practices.ESB.Itinerary.Schemas.ServiceState == Pending  And
+Microsoft.Practices.ESB.Itinerary.Schemas.ServiceType == Messaging  And
+Microsoft.Practices.ESB.Itinerary.Schemas.IsRequestResponse == false
+
+
+MESSAGE TYPE DEL ESQUEMA
+target # rootname
+
+http://Mobiletec.Biztalk.SMS.Schemas.Vonage#Sms_Vonage

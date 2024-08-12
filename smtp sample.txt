@@ -1,0 +1,5 @@
+XML_Outgoing(SMTP.SMTPHost) = "WS03VSSQL05";
+Outgoing(SMTP.From) = "biztalkadmin@WS03VSSQL05";
+Outgoing(SMTP.Subject) = "Order Accepted";
+Outgoing(SMTP.EmailBodyFile) = @"C:\Projects\Microsoft.Demo.Roadshow\ApprovedMsg.htm";
+XML_Outgoing(SMTP.MessagePartsAttachments) = 1;

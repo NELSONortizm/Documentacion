@@ -1,0 +1,16 @@
+https://technet2.github.io/Wiki/articles/7801.biztalk-server-performance-tuning-optimization.html
+
+
+
+Maintain and troubleshoot BizTalk Server databases
+https://docs.microsoft.com/en-us/troubleshoot/developer/biztalk/management-operations/maintain-troubleshoot-database
+
+
+https://docs.microsoft.com/en-us/troubleshoot/developer/biztalk/management-operations/maintain-troubleshoot-database
+
+
+
+The BizTalkDTADb database does not have a set size. However, if performance decreases, the database is probably too large. Typically, 15 GB to 20 GB is considered too large. When you have large BizTalk Server databases, you may experience the following issues:
+
+
+https://docs.microsoft.com/es-es/biztalk/core/archiving-and-purging-the-biztalk-tracking-database

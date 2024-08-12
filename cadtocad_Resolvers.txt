@@ -1,0 +1,47 @@
+CAD TO CAD 
+
+
+//Inicializa las variables requeridas para controlar el itinerario.
+itinerary = new Microsoft.Practices.ESB.Itinerary.SerializableItineraryWrapper();
+itineraryStep = new Microsoft.Practices.ESB.Itinerary.SerializableItineraryStepWrapper();
+
+// Obtiene el itinerario actual.
+itinerary.Itinerary = Microsoft.Practices.ESB.Itinerary.ItineraryOMFactory.Create(CallEntryIntegration);
+itineraryStep.ItineraryStep = itinerary.Itinerary.GetItineraryStep(CallEntryIntegration);
+itineraryResolvers = itineraryStep.ItineraryStep.ResolverCollection;
+
+
+
+//Obtiene el resolver actual.
+itineraryResolvers.MoveNext();
+itineraryResolver = itineraryResolvers.Current;
+
+//LOG
+System.Diagnostics.EventLog.WriteEntry("Cad2Cad",Cad2Cad.ToString());
+AdiParameter = SaveCall_CA.SaveCall_CAPart.CallEntryIntegration.Routing.AditionalParameters;
+System.Diagnostics.EventLog.WriteEntry("AdiParameter",AdiParameter);
+
+itineraryResolver = itineraryResolvers.Current;
+//Obtiene la configuración del resolver, resuelve la regla para poder enrutar.
+resolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(SaveCall_CA,itineraryResolver);
+
+//Obtiene las propiedades de transporte 
+transportType = resolverDictionary.Item("Resolver.TransportType");
+action = resolverDictionary.Item("Resolver.Action");
+
+//Se obtienen las credenciales desde la utility getCredentialsSSO
+credentials = MobileTec.BizTalk.Utilities.Credentials.Credentials.GetCredentialsSSO.GetCredentialsSSO.GetCredentials("MobileTec.Biztalk.Cad2Cad");
+
+//ADAPTER
+CallEntryIntegrationExternal(WCF.BindingType)="basicHttpBinding";
+CallEntryIntegrationExternal(WCF.Action) = action;
+
+//Configura las propiedades necesarias para el adapter.
+
+CallEntryIntegrationExternal(WCF.EndpointBehaviorConfiguration) = @"<behavior name=""EndpointBehavior""><MobileTec.BizTalk.Utilities.HttpHeaderBehaviorExtension Usuario='"+credentials.Username+"' Contrasena='"+credentials.Password+"' /></behavior>";
+//Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(resolverDictionary,InputMsgCadDestiny);
+
+//Configura el puerto de envio.Se coloca la direccion y puerto y transpor type que podría ser WCF-CUSTOM
+SaveCallIntegrationPort(Microsoft.XLANGs.BaseTypes.Address) = EndpointJurisdictionExt;
+SaveCallIntegrationPort(Microsoft.XLANGs.BaseTypes.TransportType) = transportType;
+

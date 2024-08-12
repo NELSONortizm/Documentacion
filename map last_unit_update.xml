@@ -1,0 +1,44 @@
+<xsl:template name="Crear_Envelope">
+	<xsl:param name="soloporprecedencia"/>
+	
+	<xsl:variable name="AgencyID"
+            		select="/*[local-name() = 'CAD_Message' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name() = 'Header' and namespace-uri() = '']/*[local-name() = 'AgencyName' and namespace-uri() = '']"/>
+					
+	<xsl:variable name="AgencyName"
+            		select="/*[local-name() = 'CAD_Message' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name() = 'Body' and namespace-uri() = '']/*[local-name() = 'CallEntry' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'Responders' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'Agency' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'Agency' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2' and text() = $AgencyID]/../*[local-name() = 'AgencyName' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']"/>
+					
+	<ns0:CAD_Event_Envelope xmlns:ns0="http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_Envelope/1.0">
+	
+		<xsl:variable name="LastUnitUpdated">
+			<xsl:for-each select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name()='Responders' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name()='Unit' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name()='UnitStatus' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name()='StatusDate' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']">
+				<xsl:sort order="descending"/>
+				<xsl:if test="position()=1">
+					<xsl:copy-of select="./../.."/>
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		
+		<CAD_Message xmlns="http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0">
+			<xsl:copy-of select="/*[local-name() = 'CAD_Message' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name() = 'Header' and namespace-uri() = '']" />
+			<Body xmlns=""
+					xmlns:ns0="http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2">
+				<ns0:CallEntry>
+					<xsl:copy-of select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'CallId' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']" />
+					<xsl:copy-of select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'EventId' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']" />
+					<xsl:copy-of select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'Jurisdiction' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']" />
+					<xsl:copy-of select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'DepartmentID' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']" />
+					<xsl:copy-of select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'DateProcessReference' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']" />
+					<xsl:copy-of select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'EventNumber' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']" />
+					<xsl:copy-of select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'MessageType' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']" />
+					<xsl:copy-of select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'MessageSubtype' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']" />
+					<xsl:copy-of select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'AssociatedDepartments' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']" />
+					<xsl:copy-of select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'Call' and namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']" />
+					<ns0:Responders>
+						<xsl:copy-of select="$LastUnitUpdated" />
+						<xsl:copy-of select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name()='Responders' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'Agency' and  namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name() = 'Agency' and  namespace-uri() = 'http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2' and text() = $AgencyID]/.." />
+					</ns0:Responders>
+				</ns0:CallEntry>
+			</Body>
+		</CAD_Message>
+	</ns0:CAD_Event_Envelope>
+</xsl:template>

@@ -1,0 +1,861 @@
+<CAD_Message xmlns="http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0">
+	<Header xmlns="">
+		<Version>5.8</Version>
+		<Source>CAD</Source>
+		<AgencyName xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">CFD</AgencyName>
+		<DepartmentName xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">FD</DepartmentName>
+		<Target xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">FD2</Target>
+		<EndPoint xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">https://stage.firstdue.com/</EndPoint>
+		<ChangeStatusUnit>TEST2</ChangeStatusUnit>
+	</Header>
+	<Body xmlns="">
+		<CallEntry xmlns="http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2">
+			<CallId>100327</CallId>
+			<EventId>88478</EventId>
+			<Jurisdiction>STPSO</Jurisdiction>
+			<DepartmentID>FD</DepartmentID>
+			<DateProcessReference>2023-10-02T14:47:39.7666248-05:00</DateProcessReference>
+			<EventNumber>2023-002057</EventNumber>
+			<MessageType>New Unit Dispatch</MessageType>
+			<MessageSubtype>New Unit</MessageSubtype>
+			<AdditionalParameters>ChangeStatusUnit;TEST2</AdditionalParameters>
+			<AssociatedDepartments>
+				<Department>
+					<EventId>88478</EventId>
+					<DepartmentID>FD</DepartmentID>
+					<DepartmentName>FD</DepartmentName>
+					<DepartmentType>INTERNAL</DepartmentType>
+					<CallType>QQ1</CallType>
+					<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+					<CallTypePriority>1-FD</CallTypePriority>
+					<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+					<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+					<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+				</Department>
+			</AssociatedDepartments>
+			<Call>
+				<EventId>88478</EventId>
+				<SemaphoreStatus>1</SemaphoreStatus>
+				<FullAddress>1577 GAUSE BLVD</FullAddress>
+				<AddressMask>0</AddressMask>
+				<Common>ADVANCED ALARMS</Common>
+				<HouseNumber>1577</HouseNumber>
+				<StreetName>GAUSE</StreetName>
+				<StreetType>BLVD</StreetType>
+				<StreetDirection/>
+				<Suite/>
+				<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+				<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+				<CS1Type>DR</CS1Type>
+				<CS1Direction/>
+				<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+				<CS2StreetName>KENSINGTON</CS2StreetName>
+				<CS2Type>BLVD</CS2Type>
+				<CS2Direction/>
+				<LocationArea/>
+				<City>SLIDELL</City>
+				<State>LA</State>
+				<ZipCode>70458</ZipCode>
+				<LocationLatitude>30.284727319999998</LocationLatitude>
+				<LocationLongitude>-89.75718707</LocationLongitude>
+				<CompArea>AREA</CompArea>
+				<CompCity/>
+				<AlarmPhone xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+				<AlarmExtNumber xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+				<CompLocationLatitude xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+				<CompLocationLongitude xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+				<CompPhoneArea/>
+				<CompPhoneNumber xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+				<CompExtNumber xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+				<CompAltPhoneArea/>
+				<CompAltPhoneNumber xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+				<CompAltExtNumber xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+				<IsRestricted>false</IsRestricted>
+				<CompIsJuvenile>false</CompIsJuvenile>
+				<ReceivedFrom>1-2-3</ReceivedFrom>
+				<Responder>DISPATCH</Responder>
+				<DispatchTo/>
+				<Radio>ALEJO</Radio>
+				<Classify>ARMED</Classify>
+				<SendSupervisor>false</SendSupervisor>
+				<Received>2023-10-02T14:27:53.737</Received>
+				<CallTakerId>PREYDER</CallTakerId>
+				<CallTakerName>EYDER  LEITON </CallTakerName>
+				<CallTakerAgency>Covington Police Department</CallTakerAgency>
+				<Event>
+					<EventId>88478</EventId>
+					<Status>EN</Status>
+					<StatusName>EN</StatusName>
+					<SentToDispatch>2023-10-02T14:35:12.437</SentToDispatch>
+					<Dispatched>2023-10-02T14:39:14.123</Dispatched>
+					<Enrouted>2023-10-02T14:44:03.913</Enrouted>
+					<Arrived xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<LastClear xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<IsDispatched>false</IsDispatched>
+					<UnitsDI>12W,25T,CCS,TEST,TEST1,TEST2</UnitsDI>
+					<UnitsEN>FD1</UnitsEN>
+					<UnitsAS/>
+					<UnitsOther/>
+					<IsSelfInitiated>false</IsSelfInitiated>
+					<IsTrafficStop>false</IsTrafficStop>
+					<ReasonToStop/>
+					<WasCancelled>false</WasCancelled>
+					<DispatcherId>PREYDER</DispatcherId>
+					<DispatcherName>EYDER  LEITON </DispatcherName>
+				</Event>
+				<Person>
+					<EventId>88478</EventId>
+					<Sequence>1</Sequence>
+					<PersonId>116291</PersonId>
+					<Classification>COMPLAINANT</Classification>
+					<DOB xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<Age xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<IsJuvenile>false</IsJuvenile>
+					<Area>AREA</Area>
+					<City/>
+					<LocationLatitude xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<LocationLongitude xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<PhoneArea/>
+					<Phone xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<ExtNumber xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<AltPhoneArea/>
+					<AltPhoneNumber xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<AltExtNumber xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<HasGlasses xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<CreateDate>2023-10-02T14:35:11.143</CreateDate>
+					<CreateUser>PREYDER</CreateUser>
+					<CreateComputer>PREYDER</CreateComputer>
+				</Person>
+				<Narrative>
+					<EventId>88478</EventId>
+					<Sequence>1</Sequence>
+					<Narrative>NEW: PERSON: (COMPLAINANT) (FML) .</Narrative>
+					<CreateUser>EYDER  LEITON </CreateUser>
+					<CreateDate>2023-10-02T14:35:12.447</CreateDate>
+					<CreateUserID>PREYDER</CreateUserID>
+					<CreatePosition>PREYDER</CreatePosition>
+				</Narrative>
+				<Narrative>
+					<EventId>88478</EventId>
+					<Sequence>2</Sequence>
+					<Narrative>UNIT CCS CHANGED STATUS TO DI</Narrative>
+					<CreateUser>EYDER  LEITON </CreateUser>
+					<CreateDate>2023-10-02T14:39:14.123</CreateDate>
+					<CreateUserID>PREYDER</CreateUserID>
+					<CreatePosition>PREYDER</CreatePosition>
+				</Narrative>
+				<Narrative>
+					<EventId>88478</EventId>
+					<Sequence>3</Sequence>
+					<Narrative>UNIT FD1 CHANGED STATUS TO DI</Narrative>
+					<CreateUser>EYDER  LEITON </CreateUser>
+					<CreateDate>2023-10-02T14:41:43.357</CreateDate>
+					<CreateUserID>PREYDER</CreateUserID>
+					<CreatePosition>PREYDER</CreatePosition>
+				</Narrative>
+				<Narrative>
+					<EventId>88478</EventId>
+					<Sequence>4</Sequence>
+					<Narrative>UNIT FD1 CHANGED STATUS TO EN</Narrative>
+					<CreateUser>EYDER  LEITON </CreateUser>
+					<CreateDate>2023-10-02T14:44:03.913</CreateDate>
+					<CreateUserID>PREYDER</CreateUserID>
+					<CreatePosition>PREYDER</CreatePosition>
+				</Narrative>
+				<Narrative>
+					<EventId>88478</EventId>
+					<Sequence>5</Sequence>
+					<Narrative>UNIT 12W CHANGED STATUS TO DI</Narrative>
+					<CreateUser>EYDER  LEITON </CreateUser>
+					<CreateDate>2023-10-02T14:44:25.47</CreateDate>
+					<CreateUserID>PREYDER</CreateUserID>
+					<CreatePosition>PREYDER</CreatePosition>
+				</Narrative>
+				<Narrative>
+					<EventId>88478</EventId>
+					<Sequence>6</Sequence>
+					<Narrative>UNIT 25T CHANGED STATUS TO DI</Narrative>
+					<CreateUser>EYDER  LEITON </CreateUser>
+					<CreateDate>2023-10-02T14:44:33.26</CreateDate>
+					<CreateUserID>PREYDER</CreateUserID>
+					<CreatePosition>PREYDER</CreatePosition>
+				</Narrative>
+				<Narrative>
+					<EventId>88478</EventId>
+					<Sequence>7</Sequence>
+					<Narrative>UNIT TEST CHANGED STATUS TO DI</Narrative>
+					<CreateUser>EYDER  LEITON </CreateUser>
+					<CreateDate>2023-10-02T14:47:25.91</CreateDate>
+					<CreateUserID>PREYDER</CreateUserID>
+					<CreatePosition>PREYDER</CreatePosition>
+				</Narrative>
+				<Narrative>
+					<EventId>88478</EventId>
+					<Sequence>8</Sequence>
+					<Narrative>UNIT TEST1 CHANGED STATUS TO DI</Narrative>
+					<CreateUser>EYDER  LEITON </CreateUser>
+					<CreateDate>2023-10-02T14:47:33.787</CreateDate>
+					<CreateUserID>PREYDER</CreateUserID>
+					<CreatePosition>PREYDER</CreatePosition>
+				</Narrative>
+				<Narrative>
+					<EventId>88478</EventId>
+					<Sequence>9</Sequence>
+					<Narrative>UNIT TEST2 CHANGED STATUS TO DI</Narrative>
+					<CreateUser>EYDER  LEITON </CreateUser>
+					<CreateDate>2023-10-02T14:47:39.187</CreateDate>
+					<CreateUserID>PREYDER</CreateUserID>
+					<CreatePosition>PREYDER</CreatePosition>
+				</Narrative>
+				<EventLocationData/>
+			</Call>
+			<Responders>
+				<Unit>
+					<EventId>88478</EventId>
+					<Sequence>1</Sequence>
+					<UnitName>12W</UnitName>
+					<Description>12W</Description>
+					<UnitTypeDescription>RESCUE</UnitTypeDescription>
+					<AgencyName>COVINGTON FIRE DEPT</AgencyName>
+					<Status>DI</Status>
+					<StatusName>DI</StatusName>
+					<StatusDate>2023-10-02T14:44:25.47</StatusDate>
+					<HasCaseNumber>false</HasCaseNumber>
+					<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<CallType>QQ1</CallType>
+					<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+					<CallTypePriority>1-FD</CallTypePriority>
+					<CommonName>ADVANCED ALARMS</CommonName>
+					<FullAddress>1577 GAUSE BLVD</FullAddress>
+					<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+					<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+					<ZoneField>A STATION</ZoneField>
+					<HouseNumber>1577</HouseNumber>
+					<StreetName>GAUSE</StreetName>
+					<StreetType>BLVD</StreetType>
+					<StreetDirection/>
+					<Suite/>
+					<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+					<CS1Type>DR</CS1Type>
+					<CS1Direction/>
+					<CS2StreetName>KENSINGTON</CS2StreetName>
+					<CS2Type>BLVD</CS2Type>
+					<CS2Direction/>
+					<LocationArea>45N</LocationArea>
+					<City>SLIDELL</City>
+					<State>LA</State>
+					<ZipCode>70458</ZipCode>
+					<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+					<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+					<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+					<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<UnitLocationLatitude>30.284727319999998</UnitLocationLatitude>
+					<UnitLocationLongitude>-89.75718707</UnitLocationLongitude>
+					<AssignedArea>A STATION</AssignedArea>
+					<isMOBILE>false</isMOBILE>
+					<IsPrimary>false</IsPrimary>
+					<UnitStatus>
+						<UnitName>12W</UnitName>
+						<EventId>88478</EventId>
+						<Sequence>1</Sequence>
+						<Status>DI</Status>
+						<StatusName>DI</StatusName>
+						<StatusDate>2023-10-02T14:44:25.47</StatusDate>
+						<ActivityType>S</ActivityType>
+						<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<CallType>QQ1</CallType>
+						<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+						<CallTypePriority>1-FD</CallTypePriority>
+						<FullAddress>1577 GAUSE BLVD</FullAddress>
+						<CommonName>ADVANCED ALARMS</CommonName>
+						<HouseNumber>1577</HouseNumber>
+						<StreetName>GAUSE</StreetName>
+						<StreetType>BLVD</StreetType>
+						<StreetDirection/>
+						<Suite/>
+						<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+						<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+						<CS1Type>DR</CS1Type>
+						<CS1Direction/>
+						<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+						<CS2StreetName>KENSINGTON</CS2StreetName>
+						<CS2Type>BLVD</CS2Type>
+						<CS2Direction/>
+						<LocationArea/>
+						<City>SLIDELL</City>
+						<State>LA</State>
+						<ZipCode>70458</ZipCode>
+						<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+						<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+						<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+						<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					</UnitStatus>
+				</Unit>
+				<Unit>
+					<EventId>88478</EventId>
+					<Sequence>2</Sequence>
+					<UnitName>25T</UnitName>
+					<Description>25T</Description>
+					<UnitTypeDescription>LADDER</UnitTypeDescription>
+					<AgencyName>COVINGTON FIRE DEPT</AgencyName>
+					<Status>DI</Status>
+					<StatusName>DI</StatusName>
+					<StatusDate>2023-10-02T14:44:33.26</StatusDate>
+					<HasCaseNumber>false</HasCaseNumber>
+					<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<CallType>QQ1</CallType>
+					<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+					<CallTypePriority>1-FD</CallTypePriority>
+					<CommonName>ADVANCED ALARMS</CommonName>
+					<FullAddress>1577 GAUSE BLVD</FullAddress>
+					<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+					<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+					<ZoneField>6 STATION FD</ZoneField>
+					<HouseNumber>1577</HouseNumber>
+					<StreetName>GAUSE</StreetName>
+					<StreetType>BLVD</StreetType>
+					<StreetDirection/>
+					<Suite/>
+					<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+					<CS1Type>DR</CS1Type>
+					<CS1Direction/>
+					<CS2StreetName>KENSINGTON</CS2StreetName>
+					<CS2Type>BLVD</CS2Type>
+					<CS2Direction/>
+					<LocationArea>45N</LocationArea>
+					<City>SLIDELL</City>
+					<State>LA</State>
+					<ZipCode>70458</ZipCode>
+					<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+					<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+					<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+					<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<UnitLocationLatitude>30.284727319999998</UnitLocationLatitude>
+					<UnitLocationLongitude>-89.75718707</UnitLocationLongitude>
+					<AssignedArea>6 STATION FD</AssignedArea>
+					<isMOBILE>false</isMOBILE>
+					<IsPrimary>false</IsPrimary>
+					<UnitStatus>
+						<UnitName>25T</UnitName>
+						<EventId>88478</EventId>
+						<Sequence>1</Sequence>
+						<Status>DI</Status>
+						<StatusName>DI</StatusName>
+						<StatusDate>2023-10-02T14:44:33.26</StatusDate>
+						<ActivityType>S</ActivityType>
+						<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<CallType>QQ1</CallType>
+						<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+						<CallTypePriority>1-FD</CallTypePriority>
+						<FullAddress>1577 GAUSE BLVD</FullAddress>
+						<CommonName>ADVANCED ALARMS</CommonName>
+						<HouseNumber>1577</HouseNumber>
+						<StreetName>GAUSE</StreetName>
+						<StreetType>BLVD</StreetType>
+						<StreetDirection/>
+						<Suite/>
+						<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+						<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+						<CS1Type>DR</CS1Type>
+						<CS1Direction/>
+						<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+						<CS2StreetName>KENSINGTON</CS2StreetName>
+						<CS2Type>BLVD</CS2Type>
+						<CS2Direction/>
+						<LocationArea/>
+						<City>SLIDELL</City>
+						<State>LA</State>
+						<ZipCode>70458</ZipCode>
+						<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+						<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+						<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+						<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					</UnitStatus>
+				</Unit>
+				<Unit>
+					<EventId>88478</EventId>
+					<Sequence>3</Sequence>
+					<UnitName>CCS</UnitName>
+					<Description>CCS</Description>
+					<UnitTypeDescription>AMBULANCE</UnitTypeDescription>
+					<AgencyName>PRUEBA</AgencyName>
+					<Status>DI</Status>
+					<StatusName>DI</StatusName>
+					<StatusDate>2023-10-02T14:39:14.123</StatusDate>
+					<HasCaseNumber>false</HasCaseNumber>
+					<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<CallType>QQ1</CallType>
+					<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+					<CallTypePriority>1-FD</CallTypePriority>
+					<CommonName>ADVANCED ALARMS</CommonName>
+					<FullAddress>1577 GAUSE BLVD</FullAddress>
+					<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+					<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+					<ZoneField>DA</ZoneField>
+					<HouseNumber>1577</HouseNumber>
+					<StreetName>GAUSE</StreetName>
+					<StreetType>BLVD</StreetType>
+					<StreetDirection/>
+					<Suite/>
+					<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+					<CS1Type>DR</CS1Type>
+					<CS1Direction/>
+					<CS2StreetName>KENSINGTON</CS2StreetName>
+					<CS2Type>BLVD</CS2Type>
+					<CS2Direction/>
+					<LocationArea>45N</LocationArea>
+					<City>SLIDELL</City>
+					<State>LA</State>
+					<ZipCode>70458</ZipCode>
+					<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+					<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+					<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+					<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<UnitLocationLatitude>30.284727319999998</UnitLocationLatitude>
+					<UnitLocationLongitude>-89.75718707</UnitLocationLongitude>
+					<AssignedArea>DA</AssignedArea>
+					<isMOBILE>false</isMOBILE>
+					<IsPrimary>true</IsPrimary>
+					<UnitStatus>
+						<UnitName>CCS</UnitName>
+						<EventId>88478</EventId>
+						<Sequence>1</Sequence>
+						<Status>DI</Status>
+						<StatusName>DI</StatusName>
+						<StatusDate>2023-10-02T14:39:14.123</StatusDate>
+						<ActivityType>S</ActivityType>
+						<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<CallType>QQ1</CallType>
+						<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+						<CallTypePriority>1-FD</CallTypePriority>
+						<FullAddress>1577 GAUSE BLVD</FullAddress>
+						<CommonName>ADVANCED ALARMS</CommonName>
+						<HouseNumber>1577</HouseNumber>
+						<StreetName>GAUSE</StreetName>
+						<StreetType>BLVD</StreetType>
+						<StreetDirection/>
+						<Suite/>
+						<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+						<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+						<CS1Type>DR</CS1Type>
+						<CS1Direction/>
+						<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+						<CS2StreetName>KENSINGTON</CS2StreetName>
+						<CS2Type>BLVD</CS2Type>
+						<CS2Direction/>
+						<LocationArea/>
+						<City>SLIDELL</City>
+						<State>LA</State>
+						<ZipCode>70458</ZipCode>
+						<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+						<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+						<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+						<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					</UnitStatus>
+				</Unit>
+				<Unit>
+					<EventId>88478</EventId>
+					<Sequence>4</Sequence>
+					<UnitName>FD1</UnitName>
+					<Description>FD1</Description>
+					<UnitTypeDescription>PERSON CRIMES</UnitTypeDescription>
+					<AgencyName>COVINGTON FIRE DEPT</AgencyName>
+					<Status>EN</Status>
+					<StatusName>EN</StatusName>
+					<StatusDate>2023-10-02T14:44:03.913</StatusDate>
+					<HasCaseNumber>false</HasCaseNumber>
+					<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<CallType>QQ1</CallType>
+					<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+					<CallTypePriority>1-FD</CallTypePriority>
+					<CommonName>ADVANCED ALARMS</CommonName>
+					<FullAddress>1577 GAUSE BLVD</FullAddress>
+					<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+					<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+					<ZoneField>7 STATION TEST </ZoneField>
+					<HouseNumber>1577</HouseNumber>
+					<StreetName>GAUSE</StreetName>
+					<StreetType>BLVD</StreetType>
+					<StreetDirection/>
+					<Suite/>
+					<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+					<CS1Type>DR</CS1Type>
+					<CS1Direction/>
+					<CS2StreetName>KENSINGTON</CS2StreetName>
+					<CS2Type>BLVD</CS2Type>
+					<CS2Direction/>
+					<LocationArea>45N</LocationArea>
+					<City>SLIDELL</City>
+					<State>LA</State>
+					<ZipCode>70458</ZipCode>
+					<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+					<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+					<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+					<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<UnitLocationLatitude>30.284727319999998</UnitLocationLatitude>
+					<UnitLocationLongitude>-89.75718707</UnitLocationLongitude>
+					<AssignedArea>7 STATION TEST </AssignedArea>
+					<isMOBILE>false</isMOBILE>
+					<IsPrimary>false</IsPrimary>
+					<UnitStatus>
+						<UnitName>FD1</UnitName>
+						<EventId>88478</EventId>
+						<Sequence>1</Sequence>
+						<Status>DI</Status>
+						<StatusName>DI</StatusName>
+						<StatusDate>2023-10-02T14:41:43.357</StatusDate>
+						<ActivityType>S</ActivityType>
+						<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<CallType>QQ1</CallType>
+						<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+						<CallTypePriority>1-FD</CallTypePriority>
+						<FullAddress>1577 GAUSE BLVD</FullAddress>
+						<CommonName>ADVANCED ALARMS</CommonName>
+						<HouseNumber>1577</HouseNumber>
+						<StreetName>GAUSE</StreetName>
+						<StreetType>BLVD</StreetType>
+						<StreetDirection/>
+						<Suite/>
+						<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+						<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+						<CS1Type>DR</CS1Type>
+						<CS1Direction/>
+						<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+						<CS2StreetName>KENSINGTON</CS2StreetName>
+						<CS2Type>BLVD</CS2Type>
+						<CS2Direction/>
+						<LocationArea/>
+						<City>SLIDELL</City>
+						<State>LA</State>
+						<ZipCode>70458</ZipCode>
+						<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+						<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+						<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+						<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					</UnitStatus>
+					<UnitStatus>
+						<UnitName>FD1</UnitName>
+						<EventId>88478</EventId>
+						<Sequence>2</Sequence>
+						<Status>EN</Status>
+						<StatusName>EN</StatusName>
+						<StatusDate>2023-10-02T14:44:03.913</StatusDate>
+						<ActivityType>S</ActivityType>
+						<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<CallType>QQ1</CallType>
+						<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+						<CallTypePriority>1-FD</CallTypePriority>
+						<FullAddress>1577 GAUSE BLVD</FullAddress>
+						<CommonName>ADVANCED ALARMS</CommonName>
+						<HouseNumber>1577</HouseNumber>
+						<StreetName>GAUSE</StreetName>
+						<StreetType>BLVD</StreetType>
+						<StreetDirection/>
+						<Suite/>
+						<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+						<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+						<CS1Type>DR</CS1Type>
+						<CS1Direction/>
+						<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+						<CS2StreetName>KENSINGTON</CS2StreetName>
+						<CS2Type>BLVD</CS2Type>
+						<CS2Direction/>
+						<City>SLIDELL</City>
+						<State>LA</State>
+						<ZipCode>70458</ZipCode>
+						<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+						<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+						<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+						<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					</UnitStatus>
+				</Unit>
+				<Unit>
+					<EventId>88478</EventId>
+					<Sequence>5</Sequence>
+					<UnitName>TEST</UnitName>
+					<Description>TEST</Description>
+					<UnitTypeDescription>EMERGENCY</UnitTypeDescription>
+					<AgencyName>PRUEBA</AgencyName>
+					<Status>DI</Status>
+					<StatusName>DI</StatusName>
+					<StatusDate>2023-10-02T14:47:25.91</StatusDate>
+					<HasCaseNumber>false</HasCaseNumber>
+					<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<CallType>QQ1</CallType>
+					<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+					<CallTypePriority>1-FD</CallTypePriority>
+					<CommonName>ADVANCED ALARMS</CommonName>
+					<FullAddress>1577 GAUSE BLVD</FullAddress>
+					<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+					<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+					<ZoneField>DA</ZoneField>
+					<HouseNumber>1577</HouseNumber>
+					<StreetName>GAUSE</StreetName>
+					<StreetType>BLVD</StreetType>
+					<StreetDirection/>
+					<Suite/>
+					<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+					<CS1Type>DR</CS1Type>
+					<CS1Direction/>
+					<CS2StreetName>KENSINGTON</CS2StreetName>
+					<CS2Type>BLVD</CS2Type>
+					<CS2Direction/>
+					<LocationArea>45N</LocationArea>
+					<City>SLIDELL</City>
+					<State>LA</State>
+					<ZipCode>70458</ZipCode>
+					<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+					<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+					<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+					<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<UnitLocationLatitude>30.284727319999998</UnitLocationLatitude>
+					<UnitLocationLongitude>-89.75718707</UnitLocationLongitude>
+					<AssignedArea>DA</AssignedArea>
+					<isMOBILE>false</isMOBILE>
+					<IsPrimary>false</IsPrimary>
+					<UnitStatus>
+						<UnitName>TEST</UnitName>
+						<EventId>88478</EventId>
+						<Sequence>1</Sequence>
+						<Status>DI</Status>
+						<StatusName>DI</StatusName>
+						<StatusDate>2023-10-02T14:47:25.91</StatusDate>
+						<ActivityType>S</ActivityType>
+						<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<CallType>QQ1</CallType>
+						<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+						<CallTypePriority>1-FD</CallTypePriority>
+						<FullAddress>1577 GAUSE BLVD</FullAddress>
+						<CommonName>ADVANCED ALARMS</CommonName>
+						<HouseNumber>1577</HouseNumber>
+						<StreetName>GAUSE</StreetName>
+						<StreetType>BLVD</StreetType>
+						<StreetDirection/>
+						<Suite/>
+						<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+						<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+						<CS1Type>DR</CS1Type>
+						<CS1Direction/>
+						<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+						<CS2StreetName>KENSINGTON</CS2StreetName>
+						<CS2Type>BLVD</CS2Type>
+						<CS2Direction/>
+						<LocationArea/>
+						<City>SLIDELL</City>
+						<State>LA</State>
+						<ZipCode>70458</ZipCode>
+						<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+						<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+						<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+						<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					</UnitStatus>
+				</Unit>
+				<Unit>
+					<EventId>88478</EventId>
+					<Sequence>6</Sequence>
+					<UnitName>TEST1</UnitName>
+					<Description>TEST1</Description>
+					<UnitTypeDescription>ENGINE</UnitTypeDescription>
+					<AgencyName>PRUEBA</AgencyName>
+					<Status>DI</Status>
+					<StatusName>DI</StatusName>
+					<StatusDate>2023-10-02T14:47:33.787</StatusDate>
+					<HasCaseNumber>false</HasCaseNumber>
+					<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<CallType>QQ1</CallType>
+					<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+					<CallTypePriority>1-FD</CallTypePriority>
+					<CommonName>ADVANCED ALARMS</CommonName>
+					<FullAddress>1577 GAUSE BLVD</FullAddress>
+					<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+					<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+					<ZoneField>DEI TEST</ZoneField>
+					<HouseNumber>1577</HouseNumber>
+					<StreetName>GAUSE</StreetName>
+					<StreetType>BLVD</StreetType>
+					<StreetDirection/>
+					<Suite/>
+					<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+					<CS1Type>DR</CS1Type>
+					<CS1Direction/>
+					<CS2StreetName>KENSINGTON</CS2StreetName>
+					<CS2Type>BLVD</CS2Type>
+					<CS2Direction/>
+					<LocationArea>45N</LocationArea>
+					<City>SLIDELL</City>
+					<State>LA</State>
+					<ZipCode>70458</ZipCode>
+					<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+					<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+					<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+					<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<UnitLocationLatitude>30.284727319999998</UnitLocationLatitude>
+					<UnitLocationLongitude>-89.75718707</UnitLocationLongitude>
+					<AssignedArea>DEI TEST</AssignedArea>
+					<isMOBILE>false</isMOBILE>
+					<IsPrimary>false</IsPrimary>
+					<UnitStatus>
+						<UnitName>TEST1</UnitName>
+						<EventId>88478</EventId>
+						<Sequence>1</Sequence>
+						<Status>DI</Status>
+						<StatusName>DI</StatusName>
+						<StatusDate>2023-10-02T14:47:33.787</StatusDate>
+						<ActivityType>S</ActivityType>
+						<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<CallType>QQ1</CallType>
+						<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+						<CallTypePriority>1-FD</CallTypePriority>
+						<FullAddress>1577 GAUSE BLVD</FullAddress>
+						<CommonName>ADVANCED ALARMS</CommonName>
+						<HouseNumber>1577</HouseNumber>
+						<StreetName>GAUSE</StreetName>
+						<StreetType>BLVD</StreetType>
+						<StreetDirection/>
+						<Suite/>
+						<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+						<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+						<CS1Type>DR</CS1Type>
+						<CS1Direction/>
+						<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+						<CS2StreetName>KENSINGTON</CS2StreetName>
+						<CS2Type>BLVD</CS2Type>
+						<CS2Direction/>
+						<LocationArea/>
+						<City>SLIDELL</City>
+						<State>LA</State>
+						<ZipCode>70458</ZipCode>
+						<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+						<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+						<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+						<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					</UnitStatus>
+				</Unit>
+				<Unit>
+					<EventId>88478</EventId>
+					<Sequence>7</Sequence>
+					<UnitName>TEST2</UnitName>
+					<Description>TEST2</Description>
+					<UnitTypeDescription>PUMP</UnitTypeDescription>
+					<AgencyName>PRUEBA</AgencyName>
+					<Status>DI</Status>
+					<StatusName>DI</StatusName>
+					<StatusDate>2023-10-02T14:47:39.187</StatusDate>
+					<HasCaseNumber>false</HasCaseNumber>
+					<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<CallType>QQ1</CallType>
+					<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+					<CallTypePriority>1-FD</CallTypePriority>
+					<CommonName>ADVANCED ALARMS</CommonName>
+					<FullAddress>1577 GAUSE BLVD</FullAddress>
+					<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+					<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+					<ZoneField>K STATION FD</ZoneField>
+					<HouseNumber>1577</HouseNumber>
+					<StreetName>GAUSE</StreetName>
+					<StreetType>BLVD</StreetType>
+					<StreetDirection/>
+					<Suite/>
+					<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+					<CS1Type>DR</CS1Type>
+					<CS1Direction/>
+					<CS2StreetName>KENSINGTON</CS2StreetName>
+					<CS2Type>BLVD</CS2Type>
+					<CS2Direction/>
+					<LocationArea>45N</LocationArea>
+					<City>SLIDELL</City>
+					<State>LA</State>
+					<ZipCode>70458</ZipCode>
+					<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+					<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+					<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+					<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<UnitLocationLatitude>30.284727319999998</UnitLocationLatitude>
+					<UnitLocationLongitude>-89.75718707</UnitLocationLongitude>
+					<AssignedArea>K STATION FD</AssignedArea>
+					<isMOBILE>false</isMOBILE>
+					<IsPrimary>false</IsPrimary>
+					<UnitStatus>
+						<UnitName>TEST2</UnitName>
+						<EventId>88478</EventId>
+						<Sequence>1</Sequence>
+						<Status>DI</Status>
+						<StatusName>DI</StatusName>
+						<StatusDate>2023-10-02T14:47:39.187</StatusDate>
+						<ActivityType>S</ActivityType>
+						<IsSuplemental xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<CallType>QQ1</CallType>
+						<CallTypeDescription>MOTOR VEHICLE ACCIDENT</CallTypeDescription>
+						<CallTypePriority>1-FD</CallTypePriority>
+						<FullAddress>1577 GAUSE BLVD</FullAddress>
+						<CommonName>ADVANCED ALARMS</CommonName>
+						<HouseNumber>1577</HouseNumber>
+						<StreetName>GAUSE</StreetName>
+						<StreetType>BLVD</StreetType>
+						<StreetDirection/>
+						<Suite/>
+						<CrossStreet1>CORPORATE SQUARE DR</CrossStreet1>
+						<CS1StreetName>CORPORATE SQUARE</CS1StreetName>
+						<CS1Type>DR</CS1Type>
+						<CS1Direction/>
+						<CrossStreet2>KENSINGTON BLVD</CrossStreet2>
+						<CS2StreetName>KENSINGTON</CS2StreetName>
+						<CS2Type>BLVD</CS2Type>
+						<CS2Direction/>
+						<LocationArea/>
+						<City>SLIDELL</City>
+						<State>LA</State>
+						<ZipCode>70458</ZipCode>
+						<ZoneFieldLevel1>COVFD</ZoneFieldLevel1>
+						<ZoneFieldLevel2>45N</ZoneFieldLevel2>
+						<ZoneFieldLevel3>BARKLEY PARC45N</ZoneFieldLevel3>
+						<BeginningMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+						<EndingMileage xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					</UnitStatus>
+				</Unit>
+				<Agency>
+					<EventId>88478</EventId>
+					<Sequence>1</Sequence>
+					<Agency>CFD</Agency>
+					<AgencyName>COVINGTON FIRE DEPT</AgencyName>
+					<Number>20</Number>
+					<Description>COVINGTON FIRE</Description>
+					<DepartmentName>FD</DepartmentName>
+					<Dispatched>2023-10-02T14:41:43.357</Dispatched>
+					<Enrouted>2023-10-02T14:44:03.913</Enrouted>
+					<Arrived xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<LastClear xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<IsActive>true</IsActive>
+				</Agency>
+				<Agency>
+					<EventId>88478</EventId>
+					<Sequence>2</Sequence>
+					<Agency>PR2</Agency>
+					<AgencyName>PRUEBA</AgencyName>
+					<Number>235</Number>
+					<DepartmentName>FD</DepartmentName>
+					<Dispatched>2023-10-02T14:39:14.123</Dispatched>
+					<Enrouted xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<Arrived xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<LastClear xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+					<IsActive>true</IsActive>
+				</Agency>
+			</Responders>
+		</CallEntry>
+	</Body>
+</CAD_Message>
+   

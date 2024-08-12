@@ -1,0 +1,56 @@
+FD PASOS DE ITIENRARIO
+
+**MENSAJE RECIBIDO
+msg_in = MsgIn.MessagePart_XML;
+
+
+*********SHAPE GET ITINERARY
+Itinerary.Itinerary = Microsoft.Practices.ESB.Itinerary.ItineraryOMFactory.Create(MsgIn);
+ItineraryStep.ItineraryStep = Itinerary.Itinerary.GetItineraryStep(MsgIn);
+
+ResolverCollection = ItineraryStep.ItineraryStep.ResolverCollection;
+ResolverCollection.MoveNext();
+ResolverDictionaryString = ResolverCollection.Current;
+
+//Obtiene la configuración del resolver.
+ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(MsgIn, ResolverDictionaryString);
+
+//Obtiene el mapa a usar.
+transformType = ResolverDictionary.Item("Resolver.TransformType");
+
+***SHAPE MAPTYPE
+mapType = System.Type.GetType(transformType);
+
+**SHAPE CONSTRUCT MESSAGE
+//Ejecuta la transformación
+transform(Message_PostDispath_EndPoint1) = mapType(MsgIn);
+
+//Configura las propiedades necesarias para el adapter con el mensaje construido
+Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(ResolverDictionary, Message_PostDispath_EndPoint1);
+
+***SHAPE EXPRESSION
+//Obtiene las propiedades de transporte
+
+transportLocation = ResolverDictionary.Item("Resolver.TransportLocation");
+transportType = ResolverDictionary.Item("Resolver.TransportType");
+
+//Configura el puerto de envio.
+Port_DynamicFDSendPort(Microsoft.XLANGs.BaseTypes.Address) = transportLocation;
+Port_DynamicFDSendPort(Microsoft.XLANGs.BaseTypes.TransportType) = transportType;
+
+
+
+***AVANCE ITINERARIO
+
+***SHAPE CONSTRUCT OUTMESSAGE
+//OutputMessageMsg = msg_in;
+//OutputMessageMsg(*) = msg_in(*);//copia todas las propiedades del contexto
+
+OutputMessageMsg = MsgIn.MessagePart_XML;
+OutputMessageMsg(*) = MsgIn(*);//copia todas las propiedades del contexto
+
+Itinerary.Itinerary.Advance(OutputMessageMsg, ItineraryStep.ItineraryStep);//avance un paso del itinerario
+Itinerary.Itinerary.Write(OutputMessageMsg);
+Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceInfo(" se avanza el itinerario, Orquestacion :{0}", sOrchestrationName);
+
+**SE CREAR CORRELACION DEL SENDPORT

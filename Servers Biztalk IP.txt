@@ -1,0 +1,9 @@
+192.168.2.24 --- > Release, Main => IIS 117     RMS.NET  user: administrator pass: Password1
+
+192.168.169  ----> RELEASE       => IIS 117     PROGRESS   user: administrator pass: Password1.
+
+10.0.0.53  ----> RELEASE, RMS    => IIS 51      RMS.NET
+
+192.168.0.86 --- > RELEASE. RMS  => IIS: 70     RMS.NET       user:administrator pass:Mobiletec2015.
+
+10.0.10.0.40 WIN-BLGFLHM9IH1 --->  MAIN          => IIS:40      PROGRESS  user:admindev1 pass: M0b1l3t3cD3v

@@ -1,0 +1,93 @@
+public string RunNumber(string EventId, string UnitName, string Agency)
+{
+    string ev;
+    long sum;
+    sum = 0;
+    ev = EventId.Substring(2);
+    long.TryParse(ev, out sum);
+    System.Byte[] asciiUnit = System.Text.Encoding.ASCII.GetBytes(UnitName);
+    System.Byte[] asciiAgency = System.Text.Encoding.ASCII.GetBytes(Agency);
+    foreach (System.Byte b in asciiUnit)
+      sum = sum + b;
+    foreach (System.Byte b in asciiAgency)
+      sum = sum + b;
+    return sum.ToString();
+}
+
+****
+<xsl:template name="SetIncidentNumber">
+	<xsl:param name="hasCaseNumber" />
+	<xsl:variable name="CaseNumber">
+		<xsl:if test="$hasCaseNumber = 'true'" >
+			<xsl:for-each select="./s0:UnitStatus">
+				<xsl:sort select="./s0:Sequence" order="descending" data-type="number" />
+				<xsl:if test="position() = 1">
+					<xsl:value-of select="./s0:CaseNumber" />
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:if>
+	</xsl:variable>
+	<xsl:variable name="part1" >
+		<xsl:value-of select="substring-before($CaseNumber, '-')" />	
+	</xsl:variable>
+	<xsl:variable name="part2" >
+		<xsl:value-of select="substring-after($CaseNumber, '-')" />	
+	</xsl:variable>
+	<xsl:element name="IncidentNumber">
+		<xsl:value-of select="substring($part1, string-length($part1) - 1)" /><xsl:value-of select="substring($part2, string-length($part2) - 3)" />	
+	</xsl:element>
+</xsl:template>
+
+****
+<xsl:template name="SetStatusTime">
+    <xsl:param name="Node"/>
+    <xsl:param name="Status"/>
+    <xsl:param name="SortOrder"/>
+    <xsl:element name="{$Node}">
+        <xsl:for-each select="./s0:UnitStatus/s0:Status[contains($Status, concat('*', text(), '*'))]/..">
+            <xsl:sort select="./s0:Sequence" order="{$SortOrder}" data-type="number"/>
+            <xsl:if test="position() = 1">
+                <xsl:value-of select="substring(./s0:StatusDate,1,19)"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:element>
+</xsl:template>
+**
+<xsl:template name="SetAtDestinationTime">
+	<xsl:param name="node" />
+	
+	<xsl:element name="{$node}">
+		<xsl:variable name="v_unitstatus" >
+			<xsl:for-each select="./s0:UnitStatus/s0:Status[contains('*AS*AH*', concat('*', text(), '*'))]/.." >
+				<xsl:sort select="./s0:Sequence" order="descending" data-type="number" />
+				<xsl:if test="position() = 1">
+					<xsl:copy-of select="." />
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="firstunitstatus" select="msxsl:node-set($v_unitstatus)[1]" />
+		<xsl:variable name="statusdate" >
+			<xsl:value-of select="$firstunitstatus[1]/s0:UnitStatus/s0:StatusDate/text()" />
+		</xsl:variable>
+		<xsl:variable name="status" >
+			<xsl:value-of select="$firstunitstatus[1]/s0:UnitStatus/s0:Status/text()" />
+		</xsl:variable>
+		<xsl:variable name="sequence" >
+			<xsl:value-of select="$firstunitstatus[1]/s0:UnitStatus/s0:Sequence" />
+		</xsl:variable>
+		<xsl:choose>
+			<xsl:when test="$status = 'AS'">
+				<xsl:for-each select="./s0:UnitStatus/s0:Sequence[. &lt; $sequence]/.." >
+					<xsl:sort select="./s0:Sequence" order="descending" data-type="number" />
+					<xsl:if test="position() = 1 and contains('*TR*TH*', concat('*', ./s0:Status/text(), '*'))">
+						<xsl:value-of select="substring($statusdate,1,19)" />
+					</xsl:if>
+				</xsl:for-each>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="substring($statusdate,1,19)"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:element>
+</xsl:template>
+******

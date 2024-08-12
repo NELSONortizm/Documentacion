@@ -1,0 +1,34 @@
+Comandos Comunes de Git
+git init: Inicializa un nuevo repositorio de Git.
+git clone [url]: Clona un repositorio existente desde una URL.
+git add [archivo]: Añade un archivo específico al área de preparación (staging area).
+git commit -m "[mensaje]": Realiza un commit de los cambios añadidos al área de preparación con un mensaje descriptivo.
+git status: Muestra el estado del repositorio, incluyendo archivos modificados y no rastreados.
+git push [origen] [rama]: Sube los cambios a un repositorio remoto en la rama especificada.
+git pull [origen] [rama]: Actualiza el repositorio local con los cambios del repositorio remoto.
+git branch: Muestra las ramas en el repositorio.
+git checkout [rama]: Cambia a la rama especificada.
+git merge [rama]: Fusiona la rama especificada con la rama actual.
+Ejemplo de Código C#
+
+**************************
+Abre la terminal y navega al directorio donde está el proyecto 
+git init
+git status
+git add .
+git commit -m "Add all project files"
+git remote add origin https://github.com/NELSONortizm/CrudContacto.git
+git push -u origin master
+git push -u origin master
+para subir cambios
+
+git status
+git add nombre_del_archivo //solo el nombre del archivo
+git add . //para añadir todos los cambios
+git commit -m "Descripción de los cambios realizados"
+git push origin master
+
+
+git branch nombre-de-la-rama //crear una rama
+git checkout nombre-de-la-rama // se para en esa rama
+git branch //para ver en que rama esta

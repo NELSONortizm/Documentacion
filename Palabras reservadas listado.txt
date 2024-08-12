@@ -1,0 +1,17 @@
+**********CONFIGURACION FD1******************************************************************************************************************************
+**BODY WITHOUT CITY
+
+TO=[ToList][LINE_JUMP]ISGROUP=yes[LINE_JUMP]PRIORITY=15[LINE_JUMP]MESSAGE:[LINE_JUMP][CALLTYPE],[CALLTYPEDESC]  [LOCATION]
+
+****BODY WITH CITY
+
+TO=[ToList][LINE_JUMP]ISGROUP=yes[LINE_JUMP]PRIORITY=15[LINE_JUMP]MESSAGE:[LINE_JUMP] [CALLTYPE],[CALLTYPEDESC]  [LOCATION] [CITY]
+
+
+
+
+
+***
+
+*************CONFIGURACION 186*************************************************************
+TO=[ToList] DA-PAGE - CALLTYPE: [CALLTYPE][ESPACE] NARRATIVE: [NARRATIVE][LINE_JUMP] LOCATION: [LOCATION] ASSIGNED UNITS:[ASSIGNED_UNITS:<FST>] ZONE: [ZONE] ALLZONES: [ALLZONES] CITY: [CITY] [TAB] EVENT: [EVENT#]

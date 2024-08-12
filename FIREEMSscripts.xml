@@ -1,0 +1,143 @@
+<xsl:template name="SetPcrtNumber">
+	<xsl:param name="Agency"/>
+	<xsl:param name="DepartmentName"/>
+	<xsl:variable name="CaseNumber">
+		<xsl:for-each select="Body/s0:CallEntry/s0:Responders/s0:Agency[child::*[local-name()='Agency' and text() = $Agency] and child::*[local-name()='DepartmentName' and text() = $DepartmentName]]/s0:AgencyCaseNumbers">
+			<xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+			<xsl:if test="position() = 1">
+				<xsl:value-of select="./s0:CaseNumber"/>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:variable>
+	<xsl:element name="pcr_number">
+		<xsl:value-of select="$CaseNumber"/>
+	</xsl:element>
+</xsl:template>
+<xsl:template name="SetDistrict">
+	<xsl:param name="DepartmentName"/>
+	<xsl:element name="district">
+		<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments' ]/*[local-name()='Department' and child::*[local-name()='DepartmentID' and text()=$DepartmentName]]/*[contains(local-name(), 'CallType') and text()!=''][last()]/text()"/>
+	</xsl:element>
+</xsl:template>
+
+
+**narrative
+  
+<xsl:element name="notes">
+	<xsl:for-each select="/*[local-name()='CAD_Message' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract_With_Header/3.0']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name()='Call' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']/*[local-name()='Narrative' and namespace-uri()='http://MobileTec.Biztalk.Cad.Schemas.Events/CAD_Event_DataContract/3.2']">
+		<xsl:sort select="./s0:Sequence" order="ascending" data-type="number"/>
+		<xsl:value-of select="concat(./s0:Narrative,'  ')"/>
+	</xsl:for-each>
+</xsl:element>
+  
+  ***notfied
+  <xsl:element name="notified">
+	<xsl:variable name="statusdatev" select="./*[local-name()='UnitStatus' and child::*[local-name()='Status']='DI']"/>
+	<xsl:for-each select="$statusdatev">
+		<xsl:sort select="./s0:Sequence" order="ascending" data-type="number"/>
+		<xsl:if test="position() = 1">
+			<xsl:variable name="date_" select="./s0:StatusDate"/>
+			<xsl:value-of select="concat(substring($date_,1,4),'-',substring($date_,6,2),'-',substring($date_,9,15),'Z')"/>
+		</xsl:if>
+	</xsl:for-each>
+</xsl:element>
+<xsl:element name="on_scene">
+	<xsl:variable name="statusdatev" select="./*[local-name()='UnitStatus' and child::*[local-name()='Status']='AS']"/>
+	<xsl:for-each select="$statusdatev">
+		<xsl:sort select="./s0:Sequence" order="ascending" data-type="number"/>
+		<xsl:if test="position() = 1">
+			<xsl:variable name="date_" select="./s0:StatusDate"/>
+			<xsl:value-of select="concat(substring($date_,1,4),'-',substring($date_,6,2),'-',substring($date_,9,15),'Z')"/>
+		</xsl:if>
+	</xsl:for-each>
+</xsl:element>
+<xsl:element name="at_patient">
+	<xsl:variable name="statusdatev" select="./*[local-name()='UnitStatus' and child::*[local-name()='Status']='AS-P']"/>
+	<xsl:for-each select="$statusdatev">
+		<xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+		<xsl:if test="position() = 1">
+			<xsl:variable name="date_" select="./s0:StatusDate"/>
+			<xsl:value-of select="concat(substring($date_,1,4),'-',substring($date_,6,2),'-',substring($date_,9,15),'Z')"/>
+		</xsl:if>
+	</xsl:for-each>
+</xsl:element>
+
+
+<xsl:element name="left_for_destination">
+    <xsl:variable name="statusdatev" select="./*[local-name()='UnitStatus' and contains('*TH*TR*', concat('*',child::*[local-name()='Status'],'*'))]"/>
+    <xsl:for-each select="$statusdatev">
+        <xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+        <xsl:if test="position() = 1">
+            <xsl:variable name="date_" select="./s0:StatusDate"/>
+            <xsl:value-of select="concat(substring($date_,1,4),'-',substring($date_,6,2),'-',substring($date_,9,15),'Z')"/>
+        </xsl:if>
+    </xsl:for-each>
+</xsl:element>
+
+
+<xsl:element name="completed">
+    <xsl:variable name="statusdatev" select="./*[local-name()='UnitStatus' and contains('*REASSIGN*CL*', concat('*',child::*[local-name()='Status'],'*'))]"/>
+    <xsl:for-each select="$statusdatev">
+        <xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+        <xsl:if test="position() = 1">
+            <xsl:variable name="date_" select="./s0:StatusDate"/>
+            <xsl:value-of select="concat(substring($date_,1,4),'-',substring($date_,6,2),'-',substring($date_,9,15),'Z')"/>
+        </xsl:if>
+    </xsl:for-each>
+</xsl:element>
+**atdestination
+
+
+<xsl:template name="SetAtDestinationTime">
+	<xsl:param name="at_destination" />
+	<xsl:element name="{$at_destination}">
+		<xsl:variable name="v_unitstatus" >
+			<xsl:for-each select="./s0:UnitStatus/s0:Status[contains('*AS*AH*', concat('*', text(), '*'))]/.." >
+				<xsl:sort select="./s0:Sequence" order="descending" data-type="number" />
+				<xsl:if test="position() = 1">
+					<xsl:copy-of select="." />
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="firstunitstatus" select="msxsl:node-set($v_unitstatus)[1]" />
+		<xsl:variable name="statusdate" >
+			<xsl:value-of select="$firstunitstatus[1]/s0:UnitStatus/s0:StatusDate/text()" />
+		</xsl:variable>
+		<xsl:variable name="status" >
+			<xsl:value-of select="$firstunitstatus[1]/s0:UnitStatus/s0:Status/text()" />
+		</xsl:variable>
+		<xsl:variable name="sequence" >
+			<xsl:value-of select="$firstunitstatus[1]/s0:UnitStatus/s0:Sequence" />
+		</xsl:variable>
+		<xsl:choose>
+			<xsl:when test="$status = 'AS'">
+				<xsl:for-each select="./s0:UnitStatus/s0:Sequence[. &lt; $sequence]/.." >
+					<xsl:sort select="./s0:Sequence" order="descending" data-type="number" />
+					<xsl:if test="position() = 1 and contains('*TR*TH*', concat('*', ./s0:Status/text(), '*'))">
+						<xsl:value-of select="concat(substring($statusdate,1,4),'-',substring($statusdate,6,2),'-',substring($statusdate,9,15),'Z')"/>
+					</xsl:if>
+				</xsl:for-each>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="concat(substring($statusdate,1,4),'-',substring($statusdate,6,2),'-',substring($statusdate,9,15),'Z')"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:element>
+</xsl:template>
+
+**
+
+<xsl:template name="SetPhoneArea">
+	<xsl:param name="CompPhoneNumber" />
+	<xsl:param name="AlarmPhone" />
+	<xsl:element name="ns0:phone">
+		<xsl:choose>
+			<xsl:when test="string(number($CompPhoneNumber)) != 'NaN'">
+				<xsl:value-of select="$CompPhoneNumber" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$AlarmPhone" />
+			</xsl:otherwise>
+		</xsl:choose>		
+	</xsl:element>
+</xsl:template>

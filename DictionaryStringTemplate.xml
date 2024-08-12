@@ -1,0 +1,81 @@
+<xsl:template name="SetData">
+	<xsl:param name="Jurisdiction"/>
+	<xsl:param name="UserId"/>
+	<xsl:param name="WorkStationId"/>
+	<ns0:InboundProcess xmlns:ns0="http://tempuri.org/" xmlns:ns1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+		<ns0:data>
+			<xsl:if test="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='MessageType'] !='' ">
+				<ns1:KeyValueOfstringstring>
+					<ns1:Key>MessageType</ns1:Key>
+					<ns1:Value>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='MessageType']"/>
+					</ns1:Value>
+				</ns1:KeyValueOfstringstring>
+			</xsl:if>
+			<xsl:if test="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='MessageSubType'] !='' ">
+				<ns1:KeyValueOfstringstring>
+					<ns1:Key>MessageSubType</ns1:Key>
+					<ns1:Value>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='MessageSubType']"/>
+					</ns1:Value>
+				</ns1:KeyValueOfstringstring>
+			</xsl:if>
+			<xsl:if test="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='Subject'] != ''">
+				<ns1:KeyValueOfstringstring>
+					<ns1:Key>Subject</ns1:Key>
+					<ns1:Value>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='Subject']"/>
+					</ns1:Value>
+				</ns1:KeyValueOfstringstring>
+			</xsl:if>
+			<xsl:if test="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='Urgent'] !='' ">
+				<ns1:KeyValueOfstringstring>
+					<ns1:Key>Message</ns1:Key>
+					<ns1:Value>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Message']/*[local-name()='Urgent']"/>
+					</ns1:Value>
+				</ns1:KeyValueOfstringstring>
+			</xsl:if>
+			<xsl:if test="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentId'] !='' ">
+				<ns1:KeyValueOfstringstring>
+					<ns1:Key>Sender</ns1:Key>
+					<ns1:Value>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Sender']/*[local-name()='Agent']/*[local-name()='AgentId']"/>
+					</ns1:Value>
+				</ns1:KeyValueOfstringstring>
+			</xsl:if>
+			<xsl:if test="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Recipient']/*[local-name()='SendTo'] !='' ">
+				<ns1:KeyValueOfstringstring>
+					<ns1:Key>Recipients</ns1:Key>
+					<ns1:Value>
+						<xsl:value-of select="/*[local-name()='CAD_Messaging_DataContractWithHeader']/*[local-name()='Body']/*[local-name()='Messages']/*[local-name()='Recipient']/*[local-name()='SendTo']"/>
+					</ns1:Value>
+				</ns1:KeyValueOfstringstring>
+			</xsl:if>
+			<xsl:if test="$UserId !='' ">
+				<ns1:KeyValueOfstringstring>
+					<ns1:Key>userid</ns1:Key>
+					<ns1:Value>
+						<xsl:value-of select="$UserId"/>
+					</ns1:Value>
+				</ns1:KeyValueOfstringstring>
+			</xsl:if>
+			<xsl:if test="$WorkStationId !='' ">
+				<ns1:KeyValueOfstringstring>
+					<ns1:Key>WorkStationID</ns1:Key>
+					<ns1:Value>
+						<xsl:value-of select="$WorkStationId"/>
+					</ns1:Value>
+				</ns1:KeyValueOfstringstring>
+			</xsl:if>
+			<xsl:if test="$Jurisdiction !='' ">
+				<ns1:KeyValueOfstringstring>
+					<ns1:Key>jurisdiction</ns1:Key>
+					<ns1:Value>
+						<xsl:value-of select="$Jurisdiction"/>
+					</ns1:Value>
+				</ns1:KeyValueOfstringstring>
+			</xsl:if>
+		</ns0:data>
+	</ns0:InboundProcess>
+</xsl:template>

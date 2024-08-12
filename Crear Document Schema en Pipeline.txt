@@ -1,0 +1,24 @@
+
+
+Mobiletec.Routing.Schemas.RmsProgress.MsgRouting_www_mobiletec_net+forwardMessage,Mobiletec.Routing.Schemas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5035a543ea50c7f
+
+
+
+MobileTec.Routing.NY.Schemas.MessageHeaderDTO+MessageHeaderDTO,MobileTec.Routing.NY.Schemas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5035a543ea50c7f
+
+
+****zh
+MobileTec.NYSO.Schemas.MsgRouting_MessageHeaderDTO+forwardMessage,MobileTec.NYSO.Schemas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c825021288ef3656
+
+Mobiletec.Routing.Schemas.RmsProgress.MsgRouting_www_mobiletec_net+forwardMessage,Mobiletec.Routing.Schemas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5035a543ea50c7f
+
+***
+MobileTec.NYSO.Schemas.MsgRouting_MessageHeaderDTO+forwardMessage,MobileTec.NYSO.Schemas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c825021288ef3656|MobileTec.Routing.NY.Schemas.MessageHeaderDTO+MessageHeaderDTO,MobileTec.Routing.NY.Schemas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5035a543ea50c7f
+
+
+
+biztalk application 1 STPSO
+MobileTec.NYSO.Schemas.MsgRouting_MessageHeaderDTO+forwardMessage,MobileTec.NYSO.Schemas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c825021288ef3656
+
+biztalk application 1 ZH
+MobileTec.NYSO.Schemas.MsgRouting_MessageHeaderDTO+forwardMessage,MobileTec.NYSO.Schemas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c825021288ef3656

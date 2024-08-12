@@ -1,0 +1,50 @@
+****TOMADO DE ADASHI INBOUND 
+
+Itinerary.Itinerary = Microsoft.Practices.ESB.Itinerary.ItineraryOMFactory.Create(MsgXmlDocument);
+ItineraryStep.ItineraryStep = Itinerary.Itinerary.GetItineraryStep(MsgXmlDocument);
+
+ResolverCollection = ItineraryStep.ItineraryStep.ResolverCollection;
+ResolverCollection.MoveNext();
+ResolverDictionaryString = ResolverCollection.Current;
+
+
+//Obtiene la configuración del resolver.
+ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(MsgXmlDocument, ResolverDictionaryString);
+
+
+//Obtiene el mapa a usar.
+transformType = ResolverDictionary.Item("Resolver.TransformType");
+******************************************************************************************
+
+//Obtiene el mapa
+mapType = System.Type.GetType(transformType);
+
+//Ejecuta la transformación
+transform(Msg_CADRequest) = mapType(MsgAdashiInbound);
+
+transform(Email_msg) = Map_Type(msg_in);
+
+transform(esquemasalida) = Map_Type(esquemaorigen);
+
+//Configura las propiedades necesarias para el adapter.
+Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(ResolverDictionary, Msg_CADRequest);
+Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(ResolverDictionary, esquemasalida);
+
+
+//Obtiene las propiedades de transporte
+transportLocation = ResolverDictionary.Item("Resolver.TransportLocation");
+transportType = ResolverDictionary.Item("Resolver.TransportType");
+
+//Configura el puerto de envio.
+AdashiInbound_DynamicPort(Microsoft.XLANGs.BaseTypes.Address) = transportLocation;
+AdashiInbound_DynamicPort(Microsoft.XLANGs.BaseTypes.TransportType) = transportType;
+
+
+****SCOPE AVANCE ITINERARIO
+OutputMessageMsg = Message_InAdashi;
+OutputMessageMsg(*) = Message_InAdashi(*);//copia todas las propiedades del contexto
+
+Itinerary.Itinerary.Advance(OutputMessageMsg, ItineraryStep.ItineraryStep);//avance un paso del itinerario
+Itinerary.Itinerary.Write(OutputMessageMsg);
+
+Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceInfo(" se avanza el itinerario, Orquestacion :{0}", sOrchestrationName);

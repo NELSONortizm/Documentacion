@@ -1,0 +1,17 @@
+**JOB Backup BizTalk Server (BizTalkMgmtDb)
+
+    exec [dbo].[sp_SetBackupCompression] @bCompression = 0 /*0 - Do not use Compression, 1 - Use Compression */
+
+    exec [dbo].[sp_BackupAllFull_Schedule] 'd' /* Frequency */, 'BTS' /* Name */, 'D:\Backups_BaseDatos_Biztalk' /* location of backup files */
+
+    exec [dbo].[sp_MarkAll] 'BTS' /*  Log mark name */, 'D:\Backups_BaseDatos_Biztalk' /* location of backup files */
+
+    exec [dbo].[sp_DeleteBackupHistory] @DaysToKeep=14
+
+**JOB Backup BizTalk Server (BizTalkMgmtDb)
+
+** JOB DTA Purge and Archive (BizTalkDTADb)
+    declare @dtLastBackup datetime 
+    set @dtLastBackup = GetUTCDate()
+    exec dtasp_PurgeTrackingDatabase 1, 2, 3, @dtLastBackup, 1
+** JOB DTA Purge and Archive (BizTalkDTADb)

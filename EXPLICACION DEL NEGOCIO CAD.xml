@@ -1,0 +1,122 @@
+DISPARADORES:
+
+LIVE
+
+NEW AGENCY 1
+PRIMARE VEZ QUE ES DESPACHADA LA UNIDAD PARA UNA AGENCIA
+
+UNIDAD ADICIONALES A LA AGENCIA AL EVENTO
+NEW UNIT 
+
+CAMBIO DE ESTADOS DE UNIDAD AH EN
+UPDATE UNIT 
+
+ACT UNIDAD --> SOLO AFECTA UNIDAD
+ACT EVENTO --> EVENTO Y UNIDADES ASIG AL EVENTO
+
+A LAS UNIDADES SE ASIGNAN CASO 
+	ASIGNG CASE , 
+	EMOVE CASE, 
+	REASSIGN CASE
+
+CAMBIO ESTADO : 
+OCURREN CUANDO EN LA UNIDAD LA PASA ALGO AH EN AS CL
+
+MT = UPDATE UNIT
+MS = LOCATION
+ESTADOS SOBRE LA UNIDAD QUE FUNCIONAN EN BASE A LA UBICACION A LA UNIDAD
+TH AH TR
+
+MT = UPDATE UNIT
+MS = DISPOSITION
+
+CUANDO DA CLEAR Y AGREGA EL POR QUE SE CANCELA
+
+CASE NUMBER
+<Agency>
+	<EventId>76091</EventId>
+	<Sequence>1</Sequence>
+	<Agency>FST</Agency>
+	<AgencyName>FIRE STPSO</AgencyName>
+	<Number>11</Number>
+	<Description>AGENCY FIRE STPSO</Description>
+	<DepartmentName>FD 1</DepartmentName>
+	<Dispatched>2022-11-01T11:07:23.203</Dispatched>
+	<Enrouted xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+	<Arrived xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+	<LastClear xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+	<IsActive>true</IsActive>
+	<AgencyCaseNumbers>
+		<Agency>FST</Agency>
+		<Sequence>1</Sequence>
+		<CaseNumber>2022-000193</CaseNumber>
+		<IsSuplemental>false</IsSuplemental>
+		<AssignedToUnit>pruebafire</AssignedToUnit>
+		<AssignedDate>2022-11-01T11:07:23.25</AssignedDate>
+		<ChangeDate xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+	</AgencyCaseNumbers>
+	<AgencyCaseNumbers>
+		<Agency>FST</Agency>
+		<Sequence>1</Sequence>
+		<CaseNumber>2022-000193</CaseNumber>
+		<IsSuplemental>false</IsSuplemental>
+		<AssignedToUnit>pruebafire</AssignedToUnit>
+		<AssignedDate>2022-11-01T11:07:23.25</AssignedDate>
+		<ChangeDate xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+		REASSIGNEFROM
+	</AgencyCaseNumbers>
+</Agency>
+
+
+**ESTADOS QUE AFECTAN EVENTO
+UPDATE EVENTO
+
+HAY VARIAS  FORMAS DE CREAR EVENTO 
+
+EL NORMAL 9
+
+MT = NEW EVENT
+MS= INTERNAL
+
+ACTUAIZACIONES DEL EVENTO
+
+MT
+UPDATE EVENT
+
+MS
+CLEAR : CUANDO SE CL LA UNIDAD
+JOIN: LLAMADAS DEL MISMO EVENTO
+NARRATIVE : 
+
+	TIPOS DE NARRATIVE CREADAS POR EL USAURIO Y CREADAS AUTOMATICAMENTE
+	MANUAL CAD GENERA: UPDATE EVENT - NARRATIVE
+	CAD GENERA EVENT 1 , UNIDAD X, PERO USUARIO AGREGA NARRATIVA -> ACA EL XML UPDATE EVENT NARRATIVE
+
+EVENT-CALLTYPE
+  TIPO DE LLAMADA, SE PUEDE DEFINIR EL TIPO: ROBO, TUMBAS, ACCIDENTE XX
+  PERO LO QUE EMPIEZA COMO INCENDIO PUEDE TERMINAR COMO HURTO
+  
+EVENT-PRIORITY
+  CAMBIOS DE PRIORIDAD AL EVENTO
+  
+  
+MT= UPDATE EVENT
+MS= EVENT 
+
+	ADD UPDATE PEOPLE
+	ADD VEHICLE
+	EVENT STATUS CHANGE
+	EVENT LOCATION CHANGES
+	CHANGES ON ALARMAS
+	
+
+*************************STAGE
+MANTENIMIENTO
+
+ASSIGN CASSE
+ATTACH 
+
+
+
+
+

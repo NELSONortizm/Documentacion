@@ -1,0 +1,33 @@
+ public DTO_JurisdictionFilter ConexionBD(string jurisdiction)
+        {
+            string connetionString = null;
+            SqlConnection sqlCnn;
+            SqlCommand sqlCmd;
+            string sql = null;
+            DTO_JurisdictionFilter dto = new DTO_JurisdictionFilter();
+
+            try
+            {
+                connetionString = ConfigurationManager.ConnectionStrings["CnProgress"].ConnectionString;
+                sqlCnn = new SqlConnection(connetionString);
+                sqlCnn.Open();
+                sql = "select jurisdiction, department, url,userid, Password, AppServerInfo from ADM_JURISDICTION_FILTER where Jurisdiction = '" + jurisdiction + "'";
+                sqlCmd = new SqlCommand(sql, sqlCnn);
+                SqlDataReader sqlReader = sqlCmd.ExecuteReader();
+                while (sqlReader.Read())
+                {
+                    dto.jurisdiction = sqlReader.GetString(0);
+                    dto.department = sqlReader.GetString(1);
+                    dto.url = sqlReader.GetString(2);
+                    dto.userId = sqlReader.GetString(3);
+                    dto.password = sqlReader.GetString(4);
+                    dto.appServerInfo = sqlReader.GetString(5);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return dto;
+        }//DTO_JurisdictionFilter

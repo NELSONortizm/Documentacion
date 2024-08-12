@@ -1,0 +1,3 @@
+FFDasm.exe (Esquema xml o txt con datos) -bs (esquema.xsd)
+
+Program Files (x86)\Microsoft BizTalk Server 2016\SDK\Utilities\PipelineTools>FFDasm.exe "D:\TFS\InMotion_ESB\Mobiletec.Biztalk.AniAli.Vesta.Pasco\DEV\Mobiletec.Biztalk.AniAli.Vesta.Pasco.Schemas\ZH ANI ALI REAL.txt" -bs D:\TFS\InMotion_ESB\Mobiletec.Biztalk.AniAli.Vesta.Pasco\DEV\Mobiletec.Biztalk.AniAli.Vesta.Pasco.Schemas\VestaPasco.xsd -c

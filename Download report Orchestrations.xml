@@ -1,0 +1,34 @@
+/ Obtiene el itinerario actual.
+Itinerary.Itinerary = Microsoft.Practices.ESB.Itinerary.ItineraryOMFactory.Create(InputMessageMsg);
+ItineraryStep.ItineraryStep = Itinerary.Itinerary.GetItineraryStep(InputMessageMsg);
+ResolverCollection = ItineraryStep.ItineraryStep.ResolverCollection;
+
+
+
+sScopeName="Scope_SendingMobileCADBridgeService";
+iScopeStarted= Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceStartScope("TraceStartScope:"+sScopeName);
+
+//Obtiene el resolver actual.
+ResolverCollection.MoveNext();
+ResolverDictionaryString = ResolverCollection.Current;
+
+//Obtiene la configuración del resolver.
+ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(messageHeaderDTO, ResolverDictionaryString);
+
+//Obtiene las propiedades de transporte
+transportLocation = ResolverDictionary.Item("Resolver.TransportLocation");
+transportType = ResolverDictionary.Item("Resolver.TransportType");
+
+//Obtiene el mapa a usar.
+transformType = ResolverDictionary.Item("Resolver.TransformType");
+
+//Configura el puerto de envio.
+UpforwardMessagePort(Microsoft.XLANGs.BaseTypes.Address) = transportLocation;
+UpforwardMessagePort(Microsoft.XLANGs.BaseTypes.TransportType) = transportType;
+
+
+//Obtiene el mapa
+mapType = System.Type.GetType(transformType);
+System.Diagnostics.EventLog.WriteEntry("Mensaje de Validacion ",mapType.ToString()); 
+//Ejecuta la transformación
+transform(forwardMessage) = mapType(messageHeaderDTO);

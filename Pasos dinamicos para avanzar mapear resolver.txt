@@ -1,0 +1,36 @@
+Itinerary.Itinerary = Microsoft.Practices.ESB.Itinerary.ItineraryOMFactory.Create(MsgXmlDocument);
+ItineraryStep.ItineraryStep = Itinerary.Itinerary.GetItineraryStep(MsgXmlDocument);
+
+ResolverCollection = ItineraryStep.ItineraryStep.ResolverCollection;
+ResolverCollection.MoveNext();
+ResolverDictionaryString = ResolverCollection.Current;
+
+//Obtiene la configuración del resolver.
+ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(MsgXmlDocument, ResolverDictionaryString);
+
+//Obtiene el mapa a usar.
+transformType = ResolverDictionary.Item("Resolver.TransformType");
+
+*****************************
+//Obtiene el mapa
+mapType = System.Type.GetType(transformType);
+
+//Ejecuta la transformación
+transform(Msg_CADRequest) = mapType(MsgAdashiInbound);
+
+//Configura las propiedades necesarias para el adapter.
+Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(ResolverDictionary, Msg_CADRequest);
+
+******************************************
+//Obtiene las propiedades de transporte
+transportLocation = ResolverDictionary.Item("Resolver.TransportLocation");
+transportType = ResolverDictionary.Item("Resolver.TransportType");
+
+//Configura el puerto de envio.
+AdashiInbound_DynamicPort(Microsoft.XLANGs.BaseTypes.Address) = transportLocation;
+AdashiInbound_DynamicPort(Microsoft.XLANGs.BaseTypes.TransportType) = transportType;
+***
+****
+MessagePart = XML
+MsgAdashiInbound.MessagePart_MsgAdashiInbound = MsgXmlDocument.MessagePart_XmlDocument;
+

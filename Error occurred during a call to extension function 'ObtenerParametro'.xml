@@ -1,0 +1,50 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <s:Fault>
+         <faultcode xmlns:a="http://schemas.microsoft.com/net/2005/12/windowscommunicationfoundation/dispatcher">a:InternalServiceFault</faultcode>
+         <faultstring xml:lang="en-US">There was a failure executing the receive pipeline: "MobileTec.BizTalk.Cad.Pipelines.Rcv_DuplicateEventMessage, MobileTec.BizTalk.Cad.Pipelines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e434e7ab6a35ab82" Source: "ESB Dispatcher" Receive Port: "RP.MobileTec.Cad.Events.CAD_Events" URI: "/MobileTec/MobileTec.BizTalk.Cad.Events/CAD_Events.svc" Reason: An error occurred during a call to extension function 'ObtenerParametro'. See InnerException for a complete description of the error.</faultstring>
+         <detail>
+            <ExceptionDetail xmlns="http://schemas.datacontract.org/2004/07/System.ServiceModel" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+               <HelpLink i:nil="true"/>
+               <InnerException i:nil="true"/>
+               <Message>There was a failure executing the receive pipeline: "MobileTec.BizTalk.Cad.Pipelines.Rcv_DuplicateEventMessage, MobileTec.BizTalk.Cad.Pipelines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e434e7ab6a35ab82" Source: "ESB Dispatcher" Receive Port: "RP.MobileTec.Cad.Events.CAD_Events" URI: "/MobileTec/MobileTec.BizTalk.Cad.Events/CAD_Events.svc" Reason: An error occurred during a call to extension function 'ObtenerParametro'. See InnerException for a complete description of the error.</Message>
+               <StackTrace>at Microsoft.BizTalk.Adapter.Wcf.Runtime.BizTalkAsyncResult.End()
+   at Microsoft.BizTalk.Adapter.Wcf.Runtime.BizTalkServiceInstance.EndOperation(IAsyncResult result)
+   at AsyncInvokeEndEndTwoWayMethod(Object , Object[] , IAsyncResult )
+   at System.ServiceModel.Dispatcher.AsyncMethodInvoker.InvokeEnd(Object instance, Object[]&amp; outputs, IAsyncResult result)
+   at System.ServiceModel.Dispatcher.DispatchOperationRuntime.InvokeEnd(MessageRpc&amp; rpc)
+   at System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage7(MessageRpc&amp; rpc)
+   at System.ServiceModel.Dispatcher.MessageRpc.Process(Boolean isOperationContextSet)</StackTrace>
+               <Type>Microsoft.BizTalk.Message.Interop.BTSException</Type>
+            </ExceptionDetail>
+         </detail>
+      </s:Fault>
+   </s:Body>
+</s:Envelope>
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <s:Fault>
+         <faultcode xmlns:a="http://schemas.microsoft.com/net/2005/12/windowscommunicationfoundation/dispatcher">a:InternalServiceFault</faultcode>
+         <faultstring xml:lang="en-US">There was a failure executing the receive pipeline: "MobileTec.BizTalk.Cad.Pipelines.Rcv_DuplicateEventMessage, MobileTec.BizTalk.Cad.Pipelines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e434e7ab6a35ab82" Source: "ESB Dispatcher" Receive Port: "RP.MobileTec.Cad.Events.CAD_Events" URI: "/MobileTec/MobileTec.BizTalk.Cad.Events/CAD_Events.svc" Reason: An error occurred during a call to extension function 'ObtenerParametro'. See InnerException for a complete description of the error.</faultstring>
+         <detail>
+            <ExceptionDetail xmlns="http://schemas.datacontract.org/2004/07/System.ServiceModel" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+               <HelpLink i:nil="true"/>
+               <InnerException i:nil="true"/>
+               <Message>There was a failure executing the receive pipeline: "MobileTec.BizTalk.Cad.Pipelines.Rcv_DuplicateEventMessage, MobileTec.BizTalk.Cad.Pipelines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e434e7ab6a35ab82" Source: "ESB Dispatcher" Receive Port: "RP.MobileTec.Cad.Events.CAD_Events" URI: "/MobileTec/MobileTec.BizTalk.Cad.Events/CAD_Events.svc" Reason: An error occurred during a call to extension function 'ObtenerParametro'. See InnerException for a complete description of the error.</Message>
+               <StackTrace>at Microsoft.BizTalk.Adapter.Wcf.Runtime.BizTalkAsyncResult.End()
+   at Microsoft.BizTalk.Adapter.Wcf.Runtime.BizTalkServiceInstance.EndOperation(IAsyncResult result)
+   at AsyncInvokeEndEndTwoWayMethod(Object , Object[] , IAsyncResult )
+   at System.ServiceModel.Dispatcher.AsyncMethodInvoker.InvokeEnd(Object instance, Object[]&amp; outputs, IAsyncResult result)
+   at System.ServiceModel.Dispatcher.DispatchOperationRuntime.InvokeEnd(MessageRpc&amp; rpc)
+   at System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage7(MessageRpc&amp; rpc)
+   at System.ServiceModel.Dispatcher.MessageRpc.Process(Boolean isOperationContextSet)</StackTrace>
+               <Type>Microsoft.BizTalk.Message.Interop.BTSException</Type>
+            </ExceptionDetail>
+         </detail>
+      </s:Fault>
+   </s:Body>
+</s:Envelope>
+
+
+CAUSA: EL PARAMETRO INTERFACE NO ESTABA CONFIGURADO, SE HABIA CONFIGURADO COMO INTEFACE SIN R.

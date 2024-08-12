@@ -1,0 +1,176 @@
+***TRACE IN:
+    gCallToken= Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceIn();
+
+***SOOPE GETITINERARY DATA
+    TRACE INPUT MESSGAE SHAPE
+    msg_in_string = msg_in.OuterXml;
+    sScopeName = "GetItinerary data";
+    iScopeStarted = Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceStartScope(sScopeName);
+                    Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceInfo("{0} - {1}",sOrchestrationName, System.String.Format("Receive Message: {0}", msg_in_string.Substring(0,600)));
+                    
+    **GetDataItinerary SHAPE**
+	
+    Itinerary.Itinerary = Microsoft.Practices.ESB.Itinerary.ItineraryOMFactory.Create(msg_in);
+    ItineraryStep.ItineraryStep = Itinerary.Itinerary.GetItineraryStep(msg_in);
+	
+    ResolverCollection = ItineraryStep.ItineraryStep.ResolverCollection;
+    ResolverCollection.MoveNext();
+	
+    ResolverDictionaryString = ResolverCollection.Current;
+    ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(msg_in, ResolverDictionaryString);
+    Transform_Type = ResolverDictionary.Item("Resolver.TransformType");
+
+    Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceInfo("{0} - {1}",sOrchestrationName, System.String.Format("Transform Type: {0}", Transform_Type));
+
+    **TRACE END SCOPE
+    Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceEndScope(sScopeName, iScopeStarted, gCallToken);
+
+**FIN SOOPE GETITINERARY DATA
+
+**Scope_ObtenerParametros (atomic)
+
+TraceInput_Scope_ObtenerParametros SHAPE
+    sScopeName = "Scope_ObtenerParametros";
+    iScopeStarted = Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceStartScope(sScopeName);
+
+Get_Parameters_For_Loop SHAPE 
+    Agencia = xpath(msg_in,"string(/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='AgencyName'])");
+    Departamento = xpath(msg_in,"string(/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='DepartmentName'])");
+    Destino = xpath(msg_in,"string(/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='Target'])");
+    Smtp_Server = Get_Parameters.ObtenerParametro(Agencia, Departamento, Destino,"Smtp_Server");
+    Smtp_Port = Get_Parameters.ObtenerParametro(Agencia, Departamento, Destino,"Smtp_Port");
+    Sender_Password = Get_Parameters.ObtenerParametro(Agencia, Departamento, Destino,"Sender_Password");
+    MaxReintentos = System.Convert.ToInt32( Get_Parameters.ObtenerParametro("MOBILETEC","MOBILETEC","CAD","MaxReintentos"));
+
+    TiempoMaxReintentoProgress = System.Convert.ToInt32( Get_Parameters.ObtenerParametro("MOBILETEC","MOBILETEC","CAD","TiempoMaxReintentoProgress"));
+    Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceInfo("{0} counter_loop: {1} TiempoMaxReintentoProgress: {2} call ObtenerParametro ",sScopeName, counter_loop, TiempoMaxReintentoProgress);
+
+TraceEndScope SHAPE
+    Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceEndScope(sScopeName, iScopeStarted, gCallToken);
+
+Catch_ObtenerParametros
+    TraceCatch Shape 
+    Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceError(sScopeName,ex,true,gCallToken);
+
+    MessageAssignment_1 Shape
+    // Create Fault Exception Message
+    FaultMsg = Microsoft.Practices.ESB.ExceptionHandling.ExceptionMgmt.CreateFaultMessage();
+    FaultMsg.FaultMgsPart.FailureCategory = "Technical";
+    FaultMsg.FaultMgsPart.Scope = sScopeName;
+    FaultMsg.FaultMgsPart.FaultCode = "EXC_GRL_002";
+    FaultMsg.FaultMgsPart.FaultDescription = "Ocurrio una excepcion obteniendo los parametros Smtp_Port, Smtp_Server, Sender_Password.";
+    FaultMsg.FaultMgsPart.FaultSeverity = Microsoft.Practices.ESB.ExceptionHandling.FaultSeverity.Severe;
+
+    Microsoft.Practices.ESB.ExceptionHandling.ExceptionMgmt.AddMessage(FaultMsg, msg_in);
+
+TraceEndScope SHAPE
+    Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceEndScope(sScopeName, iScopeStarted, gCallToken);
+    
+**FIN Scope_ObtenerParametros (atomic)
+
+**SCOPE Scope_Send_Email
+Trace InputMessage Shape
+    sScopeName = "Send-Email";
+    iScopeStarted = Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceStartScope(sScopeName);
+
+Get_MapType Shape
+    Map_Type = System.Type.GetType(Transform_Type);
+    
+MessageAssignment_2 Shape
+    transform(Email_msg) = Map_Type(msg_in);
+
+    Email_msg(SMTP.From) = xpath(Email_msg,"string(/*[local-name()='Mail']/*[local-name()='Sender'])");
+    Email_msg(SMTP.Subject) = xpath(Email_msg,"string(/*[local-name()='Mail']/*[local-name()='Subject'])");
+    Email_msg(SMTP.EmailBodyText) = xpath(Email_msg,"string(/*[local-name()='Mail']/*[local-name()='Body'])");
+    Email_msg(SMTP.EmailBodyTextCharset) = "utf-8";
+    Email_msg(SMTP.Username)  = xpath(Email_msg,"string(/*[local-name()='Mail']/*[local-name()='Sender'])");
+    Email_msg(SMTP.Password) = Sender_Password;
+    Email_msg(SMTP.SMTPHost) = System.String.Format("{0}:{1}",Smtp_Server,Smtp_Port);
+    Email_msg(SMTP.SMTPAuthenticate) = 1;
+    
+**Set_Snd_EmailPort Shape 
+    Snd_EmailPort(Microsoft.XLANGs.BaseTypes.Address) = System.String.Format("mailto:{0}",xpath(Email_msg,"string(/*[local-name()='Mail']/*[local-name()='ToList'])"));
+
+TraceEndScope shape
+    Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceEndScope(sScopeName, iScopeStarted, gCallToken);
+    
+Set_countertoMax Shape  
+counter_loop = (MaxReintentos+1);
+
+TRY Catch
+TraceCatchProgress
+    Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceError(ex,true,gCallToken);
+    
+DECIDE SHAPE
+  SI counter_loop Menorque MaxReintentos
+    
+    IncrementCounterLoop Shape
+        counter_loop = counter_loop +1;
+        
+    Delay Shape
+    new System.TimeSpan(0,0,TiempoMaxReintentoProgress);
+  SINO
+    Faults_Assigment Shape
+    // Create Fault Exception Message
+    FaultMsg = Microsoft.Practices.ESB.ExceptionHandling.ExceptionMgmt.CreateFaultMessage();
+    FaultMsg.FaultMgsPart.FailureCategory = "Technical";
+    FaultMsg.FaultMgsPart.Scope = sScopeName;
+    FaultMsg.FaultMgsPart.FaultCode = "EXC_GRL_003";
+    FaultMsg.FaultMgsPart.FaultDescription = "Ocurrio una excepcion enviando el correo SMTP";
+    FaultMsg.FaultMgsPart.FaultSeverity = Microsoft.Practices.ESB.ExceptionHandling.FaultSeverity.Severe;
+
+    Microsoft.Practices.ESB.ExceptionHandling.ExceptionMgmt.AddMessage(FaultMsg, msg_in);
+    
+    SndFaultMsg sHAPE
+    
+    TraceEndScope Shape
+    Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceEndScope(sScopeName, iScopeStarted, gCallToken);        
+  FIN DECIDE
+  
+**FIN SCOPE Scope_Send_Email
+
+**Decide_HasItinerarySteps
+   SI ItineraryStep.ItineraryStep.Itinerary.HasNextService()
+      TraceStartScope Shape
+        sScopeName = "Scope_AvanceItinerary";
+        iScopeStarted = Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceStartScope("TraceStartScope:"+sScopeName);
+        
+      Assign_MensajeSalidaMsg Shape
+        OutputMessageMsg = msg_in;
+        OutputMessageMsg(*) = msg_in(*);//copia todas las propiedades del contexto
+
+        Itinerary.Itinerary.Advance(OutputMessageMsg, ItineraryStep.ItineraryStep);//avance un paso del itinerario
+        Itinerary.Itinerary.Write(OutputMessageMsg);
+        Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceInfo(" se avanza el itinerario, Orquestacion :{0}", sOrchestrationName);
+      
+      ***SndItineraryAdvance Shape**
+      
+      TraceEndScope Shape
+        Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceEndScope(sScopeName, iScopeStarted, gCallToken);
+        
+    SINO
+      NotHasSteps Shape
+      Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceInfo("No hay mas pasos en el Itinerario");
+    FIN DECIDE
+    
+    TRY Catch
+      TraceException Shape
+      Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceError(ex,true,gCallToken);
+      
+      Assign_FaultMsg Shape
+        // Create Fault Exception Message
+        FaultMsg = Microsoft.Practices.ESB.ExceptionHandling.ExceptionMgmt.CreateFaultMessage();
+        FaultMsg.FaultMgsPart.FailureCategory = "Technical";
+        FaultMsg.FaultMgsPart.Scope = sScopeName;
+        FaultMsg.FaultMgsPart.FaultCode = "EXC_GRL_004";
+        FaultMsg.FaultMgsPart.FaultDescription = "Ocurrio una excepcion avanzando el Itinerario";
+        FaultMsg.FaultMgsPart.FaultSeverity = Microsoft.Practices.ESB.ExceptionHandling.FaultSeverity.Severe;
+
+        Microsoft.Practices.ESB.ExceptionHandling.ExceptionMgmt.AddMessage(FaultMsg, msg_in);
+     
+     Snd_FaultMsg Shape
+     
+     TraceOut Shape
+        Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceOut(gCallToken);
+**FIN Decide_HasItinerarySteps
+      

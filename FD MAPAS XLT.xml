@@ -1,0 +1,606 @@
+*** POST 1 message	string		All the narratives concatenated separated by 2 spaces	Narrative.Narrative
+
+
+<xsl:element name="message">
+	<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='Narrative']">
+	<xsl:sort select="./s0:Sequence" order="ascending" data-type="number"/>
+		<xsl:choose>
+			<xsl:when test="position() = last()">
+				<xsl:value-of select="./s0:Narrative"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="concat(./s0:Narrative,'  ')"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:for-each>
+</xsl:element>
+
+*** post 3 All the narratives concatenated separated by 2 spaces	Narrative.Narrative
+
+<xsl:element name="narratives">
+	<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='Narrative']">
+	<xsl:sort select="./s0:Sequence" order="ascending" data-type="number"/>
+		<xsl:choose>
+			<xsl:when test="position() = last()">
+				<xsl:value-of select="./s0:Narrative"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="concat(./s0:Narrative,'  ')"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:for-each>
+</xsl:element>
+
+****unit_codes	string		comma delimited list of all the units on the event	Unit.UnitName
+<xsl:element name="unit_codes">
+	<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']">
+		<xsl:sort select="./s0:Sequence" order="ascending" data-type="number"/>
+		<xsl:choose>
+			<xsl:when test="position() = last()">
+				<xsl:value-of select="./s0:UnitName"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="concat(./s0:UnitName,',')"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:for-each>
+</xsl:element>
+
+
+***AsociatedDepartment.DepartmentName ***AsociatedDepartment.DepartmentName
+
+
+<xsl:template name="SetPriority">
+	<xsl:param name="DepartmentName"/>
+	<xsl:element name="Priority">
+		<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentName' and text()=$DepartmentName]]/*[local-name()='AsociatedDepartment.DepartmentName']"/>
+	</xsl:element>
+</xsl:template>
+
+
+
+***AsociatedDepartment.DepartmentName
+
+<xsl:template name="type">
+	<xsl:param name="DepartmentName"/>
+	<xsl:element name="type">
+		<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentName' and text()=$DepartmentName]]/*[local-name()='DepartmentName']"/>
+	</xsl:element>
+</xsl:template>
+
+***AsociatedDepartment.DepartmentName, AsociatedDepartment.CallType
+
+<xsl:template name="type">
+	<xsl:param name="DepartmentName"/>
+	<xsl:element name="type">
+		<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentName' and text()=$DepartmentName]]/*[local-name()='CallType']"/>
+	</xsl:element>
+</xsl:template>
+
+
+***AsociatedDepartment.DepartmentName, AsociatedDepartment.CallTypeDescription
+
+<xsl:template name="TmpCallTypeDescription">
+	<xsl:param name="DepartmentName"/>
+	<xsl:element name="dispatch_type">
+		<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentName' and text()=$DepartmentName]]/*[local-name()='CallTypeDescription']"/>
+	</xsl:element>
+</xsl:template>
+
+***AsociatedDepartment.DepartmentName, AsociatedDepartment.CallType
+
+<xsl:template name="Tmpdispatch_incident_type_code">
+	<xsl:param name="DepartmentName"/>
+	<xsl:element name="dispatch_incident_type_code">
+		<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentName' and text()=$DepartmentName]]/*[local-name()='CallType']"/>
+	</xsl:element>
+</xsl:template>
+
+
+
+
+**COMMENTS NARRATIVE
+
+
+
+<xsl:element name="Comments">
+	<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='Narrative']">
+		<xsl:sort select="./s0:Sequence" order="ascending" data-type="number"/>
+		<xsl:value-of select="concat(./s0:Narrative,'  ')"/>
+	</xsl:for-each>
+</xsl:element>
+
+
+**LOCATION SW, CONCATENAR callCrosStreet1 callCrosStreet1
+
+<xsl:template name="SetLocation">
+	<xsl:param name="callFullAddress"/>
+	<xsl:param name="callCrosStreet1"/>
+	<xsl:param name="callCrosStreet2"/>
+	<xsl:element name="Location">
+		<xsl:choose>
+			<xsl:when test="$callFullAddress != ''">
+				<xsl:value-of select="$callFullAddress"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="concat($callCrosStreet1,' and ',$callCrosStreet1)"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:element>
+</xsl:template>
+
+
+******AgencyCaseNumbers.CaseNumber
+
+<xsl:template name="Tmpl_incident_number">
+	<xsl:param name="Agency"/>
+	<xsl:param name="DepartmentName"/>
+	<xsl:variable name="CaseNumber">
+		<xsl:for-each select="Body/s0:CallEntry/s0:Responders/s0:Agency[child::*[local-name()='Agency' and text() = $Agency] and child::*[local-name()='DepartmentName' and text() = $DepartmentName]]/s0:AgencyCaseNumbers">
+			<xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+			<xsl:if test="position() = 1">
+				<xsl:value-of select="./s0:CaseNumber"/>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:variable>
+	<xsl:element name="incident_number">
+		<xsl:value-of select="$CaseNumber"/>
+	</xsl:element>
+</xsl:template>
+
+*****
+
+<xsl:template name="Tmpalarm_at">
+	<xsl:param name="callReceived"/>
+	<xsl:element name="alarm_at">
+		<xsl:choose>
+			<xsl:when test="string-length($callReceived) &gt; 22">
+				<xsl:value-of select="concat(substring($callReceived,1,19),'+',substring($callReceived,21,2),':',substring($callReceived,23,2))"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="concat(substring($callReceived,1,19),'+',substring($callReceived,21,2))"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:element>
+</xsl:template>
+
+**
+
+
+*****
+<xsl:template name="Tmpdispatch_notified_at">
+	<xsl:param name="date"/>
+	<xsl:element name="dispatch_notified_at">
+		<xsl:value-of select="concat(substring($date,1,19),'+',substring($date,21,2),':',substring($date,23,2))"/>
+	</xsl:element>
+</xsl:template>
+**
+
+
+**
+<xsl:template name="SetDateTime">
+	<xsl:param name="pNodeName"/>
+	<xsl:param name="pStatus"/>
+	<xsl:param name="pSortOrder"/>
+	<xsl:variable name="nombreultimaunidad">
+		<xsl:choose>
+			<xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit'] != ''">
+				<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit']"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']">
+					<xsl:sort select="./*[local-name()='StatusDate']" order="descending" data-type="text"/>
+					<xsl:if test="position() = 1">
+						<xsl:value-of select="./*[local-name()='UnitName']"/>
+					</xsl:if>
+				</xsl:for-each>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:element name="{$pNodeName}">
+		<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit' and child::*[local-name()='UnitName' and text() = $nombreultimaunidad]]/*[local-name()='UnitStatus' and child::*[local-name()='Status' and contains($pStatus, concat('*', text(), '*'))]]">
+			<xsl:sort select="./*[local-name()='StatusDate']" order="{$pSortOrder}" data-type="text"/>
+			<xsl:if test="position() = 1">
+				<xsl:value-of select="./*[local-name()='StatusDate']"/>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:element>
+</xsl:template>
+
+
+2022-11-01T11:06:11.877
+dispatch_notified_at
+2022-11-01T11:06:41.42
+2022-11-01T11:07:23.203
+
+********formatted datetime (YYYY-MM-DDTHH:MM:SS:Z)("2019-02-16T19:42:00+00:004")	Event.SentToDispatch
+
+<xsl:template name="Tmpdispatch_notified_at">
+	<xsl:param name="callReceived"/>
+	<xsl:element name="dispatch_notified_at">
+		<xsl:choose>
+			<xsl:when test="string-length($callReceived) &gt; 22">
+				<xsl:value-of select="concat(substring($callReceived,1,19),'+',substring($callReceived,21,2),':',substring($callReceived,23,2))"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="concat(substring($callReceived,1,19),'+',substring($callReceived,21,2))"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:element>
+</xsl:template>
+
+****
+<xsl:template name="Tmpalarm_at">
+	<xsl:param name="callReceived"/>
+	<xsl:element name="alarm_at">
+		<xsl:choose>
+			<xsl:when test="string-length($callReceived) &gt; 22">
+				<xsl:value-of select="concat(substring($callReceived,1,19),'+',substring($callReceived,21,2),':',substring($callReceived,23,2))"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="concat(substring($callReceived,1,19),'+',substring($callReceived,21,2))"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:element>
+</xsl:template>
+
+******
+<xsl:template name="Setcross_streets">
+	<xsl:param name="callCrosStreet1"/>
+	<xsl:param name="callCrosStreet2"/>
+	<xsl:element name="cross_streets">
+		<xsl:value-of select="concat($callCrosStreet1,' ',$callCrosStreet2)"/>
+	</xsl:element>
+</xsl:template>
+
+**** Call.Crossstreet1+" "+Call.CrossStreet2
+
+<xsl:template name="Setcross_streets">
+	<xsl:param name="callCrosStreet1"/>
+	<xsl:param name="callCrosStreet2"/>
+	<xsl:element name="cross_streets">
+		<xsl:choose>
+			<xsl:when test="$callCrosStreet1 != '' and $callCrosStreet2 != ''">
+				<xsl:value-of select="concat($callCrosStreet1,' ',$callCrosStreet2)"/>
+			</xsl:when>
+			<xsl:when test="$callCrosStreet1 != '' and $callCrosStreet2 = ''">
+				<xsl:value-of select="$callCrosStreet1"/>
+			</xsl:when>
+			<xsl:when test="$callCrosStreet1 = '' and $callCrosStreet2 !=''">
+				<xsl:value-of select="$callCrosStreet2"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="''"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:element>
+</xsl:template>
+
+
+**** ‘Received from @ CompPhoneArea - CompPhoneNumber CompExtNumber’
+
+<xsl:template name="Setnotification_type">
+	<xsl:param name="ReceivedFrom"/>
+	<xsl:param name="CompPhoneArea"/>
+	<xsl:param name="CompPhoneNumber"/>
+	<xsl:param name="CompExtNumber"/>
+	<xsl:element name="notification_type">
+		<xsl:value-of select="concat($ReceivedFrom,'@',$CompPhoneArea,'-',$CompPhoneNumber,' ',$CompExtNumber)"/>
+	</xsl:element>
+</xsl:template>
+<xsl:template name="Setnotification_type">
+	<xsl:param name="ReceivedFrom"/>
+	<xsl:param name="CompPhoneArea"/>
+	<xsl:element name="CompPhoneNumber">
+		<xsl:element name="CompExtNumber">
+			<xsl:choose>
+				<xsl:when test="$callCrosStreet1 != '' and $callCrosStreet2 != ''">
+					<xsl:value-of select="concat($callCrosStreet1,' ',$callCrosStreet2)"/>
+				</xsl:when>
+				<xsl:when test="$callCrosStreet1 != '' and $callCrosStreet2 = ''">
+					<xsl:value-of select="$callCrosStreet1"/>
+				</xsl:when>
+				<xsl:when test="$callCrosStreet1 = '' and $callCrosStreet2 !=''">
+					<xsl:value-of select="$callCrosStreet2"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="''"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:element>
+	</xsl:template>
+
+****unit unit name en el cad.common llegando todas las unidades se extrae la ultima unidad con change status unit
+
+<xsl:template name="SetUnitName">
+		<xsl:param name="pNodeName"/>
+		<xsl:variable name="nombreultimaunidad">
+			<xsl:choose>
+				<xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit'] != ''">
+					<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit']"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']">
+						<xsl:sort select="./*[local-name()='StatusDate']" order="descending" data-type="text"/>
+						<xsl:if test="position() = 1">
+							<xsl:value-of select="./*[local-name()='UnitName']"/>
+						</xsl:if>
+					</xsl:for-each>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:element name="{$pNodeName}">
+			<xsl:value-of select="$nombreultimaunidad"/>
+		</xsl:element>
+	</xsl:template>
+
+**
+***unit.name
+<xsl:template name="SetUnitName">
+		<xsl:param name="pNodeName"/>
+		<xsl:variable name="nombreultimaunidad">
+			<xsl:choose>
+				<xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit'] != ''">
+					<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit']"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']">
+						<xsl:sort select="./*[local-name()='StatusDate']" order="descending" data-type="text"/>
+						<xsl:if test="position() = 1">
+							<xsl:value-of select="./*[local-name()='UnitName']"/>
+						</xsl:if>
+					</xsl:for-each>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:element name="{$pNodeName}">
+			<xsl:value-of select="$nombreultimaunidad"/>
+		</xsl:element>
+	</xsl:template>
+
+
+*************** First Status = DI-P or DI (YYYY-MM-DDTHH:MM:SS:Z)	UnitStatus.StatusDate TOMADO DE UN XML CON VARIAS UNIDADES 
+<xsl:template name="SetDateTime">
+		<xsl:param name="pNodeName"/>
+		<xsl:param name="pStatus"/>
+		<xsl:param name="pSortOrder"/>
+		<xsl:variable name="nombreultimaunidad">
+			<xsl:choose>
+				<xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit'] != ''">
+					<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit']"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']">
+						<xsl:sort select="./*[local-name()='StatusDate']" order="descending" data-type="text"/>
+						<xsl:if test="position() = 1">
+							<xsl:value-of select="./*[local-name()='UnitName']"/>
+						</xsl:if>
+					</xsl:for-each>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:element name="{$pNodeName}">
+			<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit' and child::*[local-name()='UnitName' and text() = $nombreultimaunidad]]/*[local-name()='UnitStatus' and child::*[local-name()='Status' and contains($pStatus, concat('*', text(), '*'))]]">
+				<xsl:sort select="./*[local-name()='StatusDate']" order="{$pSortOrder}" data-type="text"/>
+				<xsl:if test="position() = 1">
+					<xsl:variable name="statusvar">
+						<xsl:value-of select="./*[local-name()='StatusDate']"/>
+					</xsl:variable>
+					<xsl:choose>
+						<xsl:when test="string-length($statusvar) &gt; 22">
+							<xsl:value-of select="concat(substring($statusvar,1,19),'+',substring($statusvar,21,2),':',substring($statusvar,23,2))"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="concat(substring($statusvar,1,19),'+',substring($statusvar,21,2))"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:element>
+	</xsl:template>
+
+
+*** POST 5 Last status before the unit were reassigned	Unitstatus.Status
+
+
+/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry' ]/*[local-name()='Responders' ]/*[local-name()='Unit' ]/*[local-name()='UnitStatus' and child::*[local-name()='Sequence' and text() = /*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit' and child::*[local-name()='UnitName' and text() = 'pruebafire']]/*[local-name()='UnitStatus' and child::*[local-name()='Status' and contains('*REASSIGN*', concat('*', text(), '*'))]]/*[local-name()='Sequence']-1]]/*[local-name()='Status']
+
+
+*** canceled_stage_code	string		Last status before the unit were reassigned	Unitstatus.Status
+
+<xsl:template name="Setcanceled_stage_code">
+		<xsl:param name="pNodeName"/>
+		<xsl:param name="pStatus"/>
+		<xsl:variable name="nombreultimaunidad">
+			<xsl:choose>
+				<xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit'] != ''">
+					<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit']"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']">
+						<xsl:sort select="./*[local-name()='StatusDate']" order="descending" data-type="text"/>
+						<xsl:if test="position() = 1">
+							<xsl:value-of select="./*[local-name()='UnitName']"/>
+						</xsl:if>
+					</xsl:for-each>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:element name="{$pNodeName}">
+			<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry' ]/*[local-name()='Responders' ]/*[local-name()='Unit' ]/*[local-name()='UnitStatus' and child::*[local-name()='Sequence' and text() = /*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit' and child::*[local-name()='UnitName' and text() = $nombreultimaunidad]]/*[local-name()='UnitStatus' and child::*[local-name()='Status' and contains($pStatus, concat('*', text(), '*'))]]/*[local-name()='Sequence']-1]]/*[local-name()='Status']"/>
+		</xsl:element>
+	</xsl:template>
+	
+***enpoint 5 canceled_stage_code	string		if the unit has a AS status then send ‘on_scene’, if not then if the unit has a EN status then send ‘while_en_route’ else send ‘prior_to_en_route’.	Unitstatus.Status
+<xsl:template name="TSetcanceled_stage_code">
+	<xsl:param name="pNodeName"/>	
+	<xsl:variable name="nombreultimaunidad">
+		<xsl:choose>
+			<xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit'] != ''">
+				<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Header']/*[local-name()='ChangeStatusUnit']"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']">
+					<xsl:sort select="./*[local-name()='StatusDate']" order="descending" data-type="text"/>
+					<xsl:if test="position() = 1">
+						<xsl:value-of select="./*[local-name()='UnitName']"/>
+					</xsl:if>
+				</xsl:for-each>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:element name="{$pNodeName}">
+		<xsl:choose>
+			<xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit' and child::*[local-name()='UnitName' and text() = $nombreultimaunidad]]/*[local-name()='UnitStatus' and child::*[local-name()='Status' and contains('*AS*', concat('*', text(), '*'))]]">
+				<xsl:value-of select="'on_scene'"/>
+			</xsl:when>
+			<xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit' and child::*[local-name()='UnitName' and text() = $nombreultimaunidad]]/*[local-name()='UnitStatus' and child::*[local-name()='Status' and contains('*EN*', concat('*', text(), '*'))]]">
+				<xsl:value-of select="'while_en_route'"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="'prior_to_en_route'"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:element>
+</xsl:template>
+
+
+*****is_aid	bool "False - if the agency of the sending is the first agency assigned  
+True - if there are more than one agency and the agency of the sending is not the first dispatched"	True - False
+
+False - if the agency of the sending is the first agency assigned 
+True - if there are more than one agency and the agency of the sending is not the first dispatched
+
+<xsl:template name="Tempis_aid">
+		<xsl:param name="Agency"/>
+		<xsl:param name="Department"/>
+		<xsl:element name="is_aid">
+			<xsl:variable name="cont_agencias" select="count(/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Agency']/*[local-name()='DepartmentName' and text()=$Department])"/>
+			<xsl:choose>
+				<xsl:when test="$cont_agencias = 1">false</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry' ]/*[local-name()='Responders']/*[local-name()='Agency' and child::*[local-name()='DepartmentName' and text()=$Department] and child::*[local-name()='Agency' and text()=$Agency] ]/*[local-name()='Sequence']=1">false</xsl:when>
+						<xsl:otherwise>true</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:element>
+	</xsl:template>
+
+
+
+******************MAPA ENDPOINT2************************
+type	string	YES		AsociatedDepartment.DepartmentName
+
+<xsl:template name="type">
+		<xsl:param name="DepartmentName"/>
+		<xsl:element name="type">
+			<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentName' and text()=$DepartmentName]]/*[local-name()='DepartmentName']"/>
+		</xsl:element>
+	</xsl:template>
+
+message	string		All the narratives concatenated separated by 2 spaces	Narrative.Narrative
+
+
+<xsl:element name="message">
+		<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='Narrative']">
+			<xsl:sort select="./s0:Sequence" order="ascending" data-type="number"/>
+			<xsl:value-of select="concat(./s0:Narrative,'  ')"/>
+		</xsl:for-each>
+	</xsl:element>
+
+****unit_codes	string		comma delimited list of all the units on the event	Unit.UnitName
+
+<xsl:element name="unit_codes">
+	<xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body' and namespace-uri()='']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']">
+		<xsl:sort select="./s0:Sequence" order="ascending" data-type="number"/>
+		<xsl:choose>
+			<xsl:when test="position() = last()">
+				<xsl:value-of select="./s0:UnitName"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="concat(./s0:UnitName,',')"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:for-each>
+</xsl:element>
+
+***AsociatedDepartment.DepartmentName, AsociatedDepartment.CallType
+
+<xsl:template name="type_code">
+	<xsl:param name="DepartmentName"/>
+	<xsl:element name="type">
+		<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentName' and text()=$DepartmentName]]/*[local-name()='CallType']"/>
+	</xsl:element>
+</xsl:template>
+
+
+<xsl:template name="T_status_code">
+	<xsl:param name="MessageType"/>
+	<xsl:param name="MessageSubtype"/>
+	<xsl:element name="status_code">
+		<xsl:choose>
+				<xsl:when test="$MessageType = 'Update Event'">Close</xsl:when>
+				<xsl:otherwise>Open</xsl:otherwise>
+			</xsl:choose>
+	</xsl:element>
+</xsl:template>
+
+***
+<xsl:template name="T_status_code">
+	<xsl:param name="MessageType"/>
+	<xsl:param name="MessageSubtype"/>
+	<xsl:element name="status_code">
+		<xsl:choose>
+				<xsl:when test="$MessageType = 'Update Event' and $MessageSubtype = 'Clear'">Close</xsl:when>
+				<xsl:otherwise>Open</xsl:otherwise>
+			</xsl:choose>
+	</xsl:element>
+</xsl:template>
+
+*****POST 4************* Department.CallTypeDescription
+
+<xsl:template name="TmpCallTypeDescription">
+	<xsl:param name="DepartmentName"/>
+	<xsl:element name="dispatch_type">
+		<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentName' and text()=$DepartmentName]]/*[local-name()='CallTypeDescription']"/>
+	</xsl:element>
+</xsl:template>
+
+****POST 4 Department.CallType
+
+<xsl:template name="type_code">
+	<xsl:param name="DepartmentName"/>
+	<xsl:element name="incident_type_code">
+		<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[local-name()='DepartmentName' and text()=$DepartmentName]]/*[local-name()='CallType']"/>
+	</xsl:element>
+</xsl:template>
+
+**** POST 4 alarm_at	string		formatted datetime (YYYY-MM-DDTHH:MM:SS:Z) ("2019-02-16T19:42:00+00:004")
+
+<xsl:template name="Tmpalarm_at">
+	<xsl:param name="callReceived"/>
+	<xsl:element name="alarm_at">
+		<xsl:choose>
+			<xsl:when test="string-length($callReceived) &gt; 22">
+				<xsl:value-of select="concat(substring($callReceived,1,19),'+',substring($callReceived,21,2),':',substring($callReceived,23,2))"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="concat(substring($callReceived,1,19),'+',substring($callReceived,21,2))"/>
+			</xsl:otherwise>
+		</xsl:choose>		
+	</xsl:element>
+</xsl:template>
+
+**** POST 4 ‘Received from @ CompPhoneArea - CompPhoneNumber CompExtNumber’
+
+<xsl:template name="Setnotification_type">
+	<xsl:param name="ReceivedFrom"/>
+	<xsl:param name="CompPhoneArea"/>
+	<xsl:param name="CompPhoneNumber"/>
+	<xsl:param name="CompExtNumber"/>	
+	<xsl:element name="notification_type">
+		<xsl:value-of select="concat($ReceivedFrom,'@',$CompPhoneArea,'-',$CompPhoneNumber,' ',$CompExtNumber)"/>
+	</xsl:element>
+</xsl:template>

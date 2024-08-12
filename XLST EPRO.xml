@@ -1,0 +1,175 @@
+<xsl:template name="Crear_Envelope">
+    <xsl:param name="soloporprecedencia"/>
+    <data>
+        <entries>
+            <xsl:variable name="Last_Agency_CaseNumber">
+                <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Agency']/*[local-name()='AgencyCaseNumbers']/*[local-name()='CaseNumber']/..">
+                    <xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+                    <xsl:if test="position() = 1">
+                        <xsl:value-of select="./s0:CaseNumber"/>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:variable>
+            <xsl:if test="$Last_Agency_CaseNumber !=''">
+                <xsl:element name="e">
+                    <xsl:attribute name="name">tbl_incident_data.incident_number_1</xsl:attribute>
+                    <xsl:value-of select="$Last_Agency_CaseNumber"/>
+                </xsl:element>
+            </xsl:if>
+            <xsl:element name="e">
+                <xsl:attribute name="name">PrimeUnitCode</xsl:attribute>
+                <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitName']"/>
+            </xsl:element>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_incident_data.incident_date</xsl:attribute>
+                <xsl:variable name="received" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='Received']"/>
+                <xsl:value-of select="concat(substring($received,6,2),'/',substring($received,9,2),'/',substring($received,1,4),' ',substring($received,12,8))"/>
+            </xsl:element>
+            <xsl:variable name="dispatched">
+                <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']/*[local-name()='Status' and contains('*DI*',concat('*',text(),'*'))]/..">
+                    <xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+                    <xsl:if test="position() = 1">
+                        <xsl:value-of select="./s0:StatusDate"/>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:variable>
+            <xsl:if test="$dispatched !=''">
+                <xsl:element name="e">
+                    <xsl:attribute name="name">tbl_incident_data.time_2</xsl:attribute>
+                    <xsl:value-of select="concat(substring($dispatched,6,2),'/',substring($dispatched,9,2),'/',substring($dispatched,1,4),' ',substring($dispatched,12,8))"/>
+                </xsl:element>
+            </xsl:if>
+            <xsl:variable name="enrouted">
+                <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']/*[local-name()='Status' and contains('*EN*',concat('*',text(),'*'))]/..">
+                    <xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+                    <xsl:if test="position() = 1">
+                        <xsl:value-of select="./s0:StatusDate"/>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:variable>
+            <xsl:if test="$enrouted !=''">
+                <xsl:element name="e">
+                    <xsl:attribute name="name">tbl_incident_data.time_3</xsl:attribute>
+                    <xsl:value-of select="concat(substring($enrouted,6,2),'/',substring($enrouted,9,2),'/',substring($enrouted,1,4),' ',substring($enrouted,12,8))"/>
+                </xsl:element>
+            </xsl:if>
+            <xsl:variable name="arrived">
+                <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']/*[local-name()='Status' and contains('*AS*',concat('*',text(),'*'))]/..">
+                    <xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+                    <xsl:if test="position() = 1">
+                        <xsl:value-of select="./s0:StatusDate"/>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:variable>
+            <xsl:if test="$arrived !=''">
+                <xsl:element name="e">
+                    <xsl:attribute name="name">tbl_incident_data.time_4</xsl:attribute>
+                    <xsl:value-of select="concat(substring($arrived,6,2),'/',substring($arrived,9,2),'/',substring($arrived,1,4),' ',substring($arrived,12,8))"/>
+                </xsl:element>
+            </xsl:if>
+            <xsl:variable name="statusdate1">
+                <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']/*[local-name()='Status' and contains('*TH*TR*',concat('*',text(),'*'))]/..">
+                    <xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+                    <xsl:if test="position() = 1">
+                        <xsl:value-of select="./s0:StatusDate"/>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:variable>
+            <xsl:if test="$statusdate1 !=''">
+                <xsl:element name="e">
+                    <xsl:attribute name="name">tbl_incident_data.time_10</xsl:attribute>
+                    <xsl:value-of select="concat(substring($statusdate1,6,2),'/',substring($statusdate1,9,2),'/',substring($statusdate1,1,4),' ',substring($statusdate1,12,8))"/>
+                </xsl:element>
+            </xsl:if>
+            <xsl:variable name="statusdate2">
+                <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']/*[local-name()='Status' and contains('*AH*',concat('*',text(),'*'))]/..">
+                    <xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+                    <xsl:if test="position() = 1">
+                        <xsl:value-of select="./s0:StatusDate"/>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:variable>
+            <xsl:if test="$statusdate2 !=''">
+                <xsl:element name="e">
+                    <xsl:attribute name="name">tbl_incident_data.time_12</xsl:attribute>
+                    <xsl:value-of select="concat(substring($statusdate2,6,2),'/',substring($statusdate2,9,2),'/',substring($statusdate2,1,4),' ',substring($statusdate2,12,8))"/>
+                </xsl:element>
+            </xsl:if>
+            <xsl:variable name="lastclear">
+                <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='UnitStatus']/*[local-name()='Status' and contains('*CL*',concat('*',text(),'*'))]/..">
+                    <xsl:sort select="./s0:Sequence" order="descending" data-type="number"/>
+                    <xsl:if test="position() = 1">
+                        <xsl:value-of select="./s0:StatusDate"/>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:variable>
+            <xsl:if test="$lastclear !=''">
+                <xsl:element name="e">
+                    <xsl:attribute name="name">tbl_incident_data.time_13</xsl:attribute>
+                    <xsl:value-of select="concat(substring($lastclear,6,2),'/',substring($lastclear,9,2),'/',substring($lastclear,1,4),' ',substring($lastclear,12,8))"/>
+                </xsl:element>
+            </xsl:if>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_incident_data.incident_street_number</xsl:attribute>
+                <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='HouseNumber']"/>
+            </xsl:element>
+            <xsl:variable name="house_number" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='HouseNumber']"/>
+            <xsl:variable name="call_streetname" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='StreetName']"/>
+            <xsl:variable name="call_streettype" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='StreetType']"/>
+            <xsl:variable name="call_streetdirection" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='StreetDirection']"/>
+            <xsl:choose>
+                <xsl:when test="$house_number =''">
+                    <xsl:element name="e">
+                        <xsl:attribute name="name">tbl_incident_data.Incident_street</xsl:attribute>
+                        <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='FullAddress']"/>
+                    </xsl:element>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:element name="e">
+                        <xsl:attribute name="name">tbl_incident_data.Incident_street</xsl:attribute>
+                        <xsl:value-of select="concat($call_streetname,' ',$call_streettype,' ',$call_streetdirection)"/>
+                    </xsl:element>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_incident_data.Incident_street_suffix_number</xsl:attribute>
+                <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='Suite']"/>
+            </xsl:element>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_incident_data.zip</xsl:attribute>
+                <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='ZipCode']"/>
+            </xsl:element>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_incident_data_2.scene_zone</xsl:attribute>
+                <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department']/*[local-name()='ZoneFieldLevel2']"/>
+            </xsl:element>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_incident_data_2.shift</xsl:attribute>
+            </xsl:element>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_INCIDENT_DATA.User1</xsl:attribute>
+                <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department']/*[local-name()='ZoneFieldLevel1']"/>
+            </xsl:element>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_INCIDENT_DATA.User2</xsl:attribute>
+                <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department']/*[local-name()='CallType']"/>
+            </xsl:element>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_incident_data.lat</xsl:attribute>
+                <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='LocationLatitude']"/>
+            </xsl:element>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_incident_data.lon</xsl:attribute>
+                <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='LocationLongitude']"/>
+            </xsl:element>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_INCIDENT_DATA.User3</xsl:attribute>
+                <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Responders']/*[local-name()='Unit']/*[local-name()='AssignedArea']"/>
+            </xsl:element>
+            <xsl:element name="e">
+                <xsl:attribute name="name">tbl_INCIDENT_DATA.User4</xsl:attribute>
+                <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments']/*[local-name()='Department' and child::*[contains(local-name(), 'ZoneFieldLevel')]]/*[last()]"/>
+            </xsl:element>
+        </entries>
+    </data>
+</xsl:template>

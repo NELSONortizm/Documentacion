@@ -1,0 +1,11 @@
+Outbound Interfaces
+-> ZOLL / EPR / FH / ESO / FPN / CAD2CAD (out) - new, SMTP, Data Exports (CityData etc.), our citizen app +++
+
+Inbound Interfaces
+-> AVL / 911 / CAD2CAD (in) - new, TaskForce App +++
+
+
+MobileTec Common Libraries (BizTalk Application 1 )
+
+
+DataExchange (MobileTec Routing )

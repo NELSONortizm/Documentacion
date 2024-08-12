@@ -1,0 +1,37 @@
+<xsl:template name="Set_MessageBodyDto">
+	<xsl:param name="AutoApproveReport" />
+
+	<xsl:for-each select="/*[local-name()='MessageHeaderDTO']/*[local-name()='MessageBody']/*[local-name()='MessageBodyDTO']">
+		<xsl:element name="MessageBodyDto" namespace="http://schemas.datacontract.org/2004/07/Dtos.ReportWriter">
+			<xsl:element name="CDFORMAT" namespace="http://schemas.datacontract.org/2004/07/Dtos.ReportWriter">
+				<xsl:value-of select="./*[local-name()='CDFORMAT']" />
+			</xsl:element>
+			<xsl:element name="CDTYPE" namespace="http://schemas.datacontract.org/2004/07/Dtos.ReportWriter">
+				<xsl:value-of select="./*[local-name()='CDTYPE']" />
+			</xsl:element>
+			<xsl:element name="DSBODY" namespace="http://schemas.datacontract.org/2004/07/Dtos.ReportWriter">
+				<xsl:choose>
+					<xsl:when test="position() = 1">
+						<xsl:choose>
+							<xsl:when test="$AutoApproveReport = 'true'">
+								<xsl:value-of select="ScriptNS0:UpdateDSBODY(./*[local-name()='DSBODY'], '/SendReport/ReportStatus', 'A')" />
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="./*[local-name()='DSBODY']" />
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="./*[local-name()='DSBODY']" />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:element>
+			<xsl:element name="NMBODY_ID" namespace="http://schemas.datacontract.org/2004/07/Dtos.ReportWriter">
+				<xsl:value-of select="./*[local-name()='NMBODY_ID']" />
+			</xsl:element>
+			<xsl:element name="NMMESSAGE_ID" namespace="http://schemas.datacontract.org/2004/07/Dtos.ReportWriter">
+				<xsl:value-of select="./*[local-name()='NMMESSAGE_ID']" />
+			</xsl:element>
+		</xsl:element>
+	</xsl:for-each>
+</xsl:template>

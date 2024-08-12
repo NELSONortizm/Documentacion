@@ -1,0 +1,9 @@
+Install-Package AutoMapper.Extensions.Microsoft.DependencyInjection
+
+Install-Package Swashbuckle.AspNetCore
+
+Microsoft.EntityFrameworkCore.SqlServer
+
+**
+Add-Migration InitialCreateSample
+update-database

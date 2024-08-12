@@ -1,0 +1,121 @@
+Itinerary.Itinerary = Microsoft.Practices.ESB.Itinerary.ItineraryOMFactory.Create(MsgXmlDocument);
+ItineraryStep.ItineraryStep = Itinerary.Itinerary.GetItineraryStep(MsgXmlDocument);
+
+ResolverCollection = ItineraryStep.ItineraryStep.ResolverCollection;
+ResolverCollection.MoveNext();
+ResolverDictionaryString = ResolverCollection.Current;
+
+//Obtiene la configuración del resolver.
+ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(MsgXmlDocument, ResolverDictionaryString);
+
+//Obtiene el nombre mapa a usar.
+transformType = ResolverDictionary.Item("Resolver.TransformType");
+
+//Obtiene las propiedades de transporte
+transportLocation = ResolverDictionary.Item("Resolver.TransportLocation");
+transportType = ResolverDictionary.Item("Resolver.TransportType");
+
+
+***********
+
+//MObtiene la clase del mapa de este tipo
+mapType = System.Type.GetType(transformType);
+
+//Ejecuta la transformación
+transform(Msg_CADRequest) = mapType(MsgAdashiInbound);
+
+//asigno las propiedades del endpoint con el mensaje de salida
+Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(ResolverDictionary,Msg_CADRequest);
+
+//Obtiene las propiedades de transporte
+transportLocation = ResolverDictionary.Item("Resolver.TransportLocation");
+transportType = ResolverDictionary.Item("Resolver.TransportType");
+
+//Configura el puerto de envio.
+AdashiInbound_DynamicPort(Microsoft.XLANGs.BaseTypes.Address) = transportLocation;
+AdashiInbound_DynamicPort(Microsoft.XLANGs.BaseTypes.TransportType) = transportType;
+
+********adashi enviar en una orquestacion varios xml uno luego del otro con dynamic port*********
+PRIMER MENSAJE Message_IncidentSchema
+ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(Message_IncidentSchema, ResolverDictionaryString);
+Message_IncidentSchema(*) = Message_InAdashi(*);
+// Call the adapter manager to set all necessary properties on the message.  
+Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(ResolverDictionary,Message_IncidentSchema);  
+
+***SEGUNDO mensaje Message_UnitsAvailable
+ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(Message_UnitsAvailable, ResolverDictionaryString);
+Message_UnitsAvailable(*) = Message_InAdashi(*);
+// Call the adapter manager to set all necessary properties on the message.  
+Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(ResolverDictionary,Message_UnitsAvailable); 
+
+***ACTUALIZAR PARAMETRO DESDE orquestacionMobileTec.BizTalk.Utilities.Configuration.Helper.ConfigReaderStatic.ActualizarParametro("MOBILETEC","MOBILETEC","ADASHI","LoadEvents","0",false);
+
+
+**correlation sets
+FOLLOWING CUANDO RECIBO
+INITIALIZING CUANDO ENVIO
+
+
+token va en el encabezado del mensaje o contexto
+se debe crear una variable para datos encabezado-
+
+
+GET /fleet/vehicles?after=abcdefg
+Second page of data
+endCursor: hijklmnop
+hasNextPage: true
+
+
+
+
+*************ENVIAR DOS MENSAJES DESDE UNA MISMA orquestacionResolverDictionary *************
+
+***GET ITINEARY data
+Itinerary.Itinerary = Microsoft.Practices.ESB.Itinerary.ItineraryOMFactory.Create(Message_InAdashi);
+ItineraryStep.ItineraryStep = Itinerary.Itinerary.GetItineraryStep(Message_InAdashi);
+
+ResolverCollection = ItineraryStep.ItineraryStep.ResolverCollection;
+ResolverCollection.MoveNext();
+ResolverDictionaryString = ResolverCollection.Current;
+
+//Obtiene la configuración del resolver.
+ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(MsgXmlDocument, ResolverDictionaryString);
+
+//Obtiene el mapa a usar.
+transformType = ResolverDictionary.Item("Resolver.TransformType");
+
+****************************************************************************************************************************
+ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(Message_IncidentSchema, ResolverDictionaryString);
+Message_IncidentSchema(*) = Message_InAdashi(*);
+
+**Call the adapter manager to set all necessary properties on the message.  
+
+Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(ResolverDictionary,Message_IncidentSchema);  
+
+**obtiene mapa a usar**************************
+
+mapType = System.Type.GetType(transformType);
+
+//Ejecuta la transformación
+transform(Msg_CADRequest) = mapType(MsgAdashiInbound);
+
+//Configura las propiedades necesarias para el adapter.
+Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(ResolverDictionary, Msg_CADRequest);
+
+***********************************************
+// Set the delivery port address.  
+Port_Dynamic_Adashi(Microsoft.XLANGs.BaseTypes.Address) = ResolverDictionary.Item("Resolver.TransportLocation");   
+Port_Dynamic_Adashi(Microsoft.XLANGs.BaseTypes.TransportType) = ResolverDictionary.Item("Resolver.TransportType");
+
+
+
+
+**SE JECUTA LA OTRA TRANSFORMACION DINAMICA O ESTATICAMENT********************************************
+ResolverDictionary = Microsoft.Practices.ESB.Resolver.ResolverMgr.Resolve(Message_UnitsAvailable, ResolverDictionaryString);
+Message_UnitsAvailable(*) = Message_InAdashi(*);
+// Call the adapter manager to set all necessary properties on the message.  
+Microsoft.Practices.ESB.Adapter.AdapterMgr.SetEndpoint(ResolverDictionary,Message_UnitsAvailable);  
+
+// Set the delivery port address.  
+Port_Dynamic_Adashi(Microsoft.XLANGs.BaseTypes.Address) = ResolverDictionary.Item("Resolver.TransportLocation");   
+Port_Dynamic_Adashi(Microsoft.XLANGs.BaseTypes.TransportType) = ResolverDictionary.Item("Resolver.TransportType");

@@ -1,0 +1,61 @@
+<xsl:template name="SetDropOffAddress">
+	<xsl:param name="Node"/>
+	<xsl:param name="Status"/>
+	<xsl:param name="SortOrder"/>
+	<xsl:param name="apiUrl1"/>
+	<xsl:param name="apiUrl2"/>
+	<xsl:param name="callFullAddress"/>
+	<xsl:param name="callCrosStreet1"/>
+	<xsl:param name="callCrosStreet2"/>
+	<xsl:element name="{$Node}">
+		<xsl:for-each select="./s0:UnitStatus/s0:Status[contains($Status, concat('*',text(),'*'))]/..">
+			<xsl:sort select="./s0:Sequence" order="{$SortOrder}" data-type="number"/>
+			<xsl:if test="position() = 1">
+				<xsl:variable name="street" select="userCSharp:RepleaceSeveralSpacesbyOne(./s0:FullAddress)"/>
+				<xsl:variable name="city" select="userCSharp:RepleaceSeveralSpacesbyOne(./s0:City)"/>
+				<xsl:variable name="state" select="./s0:State"/>
+				<xsl:variable name="apiUrl3" select="concat($apiUrl1,'street=',$street,'&amp;city=',$city,'&amp;state=',$state,$apiUrl2)"/>
+				<xsl:element name="StreetAddress">
+					<xsl:choose>
+						<xsl:when test="$callFullAddress != ''">
+							<xsl:value-of select="$callFullAddress"/>
+						</xsl:when>
+						<xsl:when test="$callCrosStreet1 != '' and  $callCrosStreet2 != ''">
+							<xsl:value-of select="concat($callCrosStreet1,'',$callCrosStreet2)"/>
+						</xsl:when>
+						<xsl:when test="$callCrosStreet1 != ''">
+							<xsl:value-of select="$callCrosStreet1"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$callCrosStreet2"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:element>
+				<xsl:element name="ZipCode">
+					<xsl:value-of select="./s0:ZipCode"/>
+				</xsl:element>
+				<xsl:element name="City">
+					<xsl:value-of select="./s0:City"/>
+				</xsl:element>
+				<xsl:element name="FacilityName">
+					<xsl:value-of select="./s0:CommonName"/>
+				</xsl:element>
+				<xsl:element name="Zone">
+					<xsl:value-of select="./*[contains(local-name(), 'ZoneFieldLevel') and text()!=''][last()-1]/text()"/>
+				</xsl:element>
+				<xsl:element name="CensusTrack">
+					<xsl:value-of select="ScriptNS1:CallCensusApiNoTask($apiUrl3,'tract')"/>
+				</xsl:element>
+				<xsl:element name="County">
+					<xsl:value-of select="ScriptNS1:CallCensusApiNoTask($apiUrl3,'basename')"/>
+				</xsl:element>
+				<xsl:element name="State">
+					<xsl:value-of select="./s0:State"/>
+				</xsl:element>
+				<xsl:element name="Grid">
+					<xsl:value-of select="userCSharp:RemoveNonNumeric(./*[contains(local-name(), 'ZoneFieldLevel') and text()!=''][last()]/text())"/>
+				</xsl:element>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:element>
+</xsl:template>

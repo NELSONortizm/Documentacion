@@ -1,0 +1,283 @@
+ <xsl:template name="Get_locationIncident">
+        <xsl:param name="call_streetname"/>
+        <xsl:param name="call_city"/>
+        <xsl:param name="call_state"/>
+        <xsl:param name="call_streetDirection"/>
+        <xsl:param name="call_streetType"/>
+        <xsl:param name="call_houseNumber"/>
+        <xsl:param name="department_id"/>
+        <xsl:param name="call_Common"/>
+        <xsl:param name="call_ZipCode"/>
+        <xsl:param name="call_Suite"/>
+        <xsl:element name="status" namespace="urn:ietf:params:xml:ns:pidf">
+            <gp:geopriv xmlns:gp="urn:ietf:params:xml:ns:pidf:geopriv10">
+                <gp:location-info>
+                    <civicAddress xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:civicAddr">
+                        <xsl:if test="$call_streetname !='' ">
+                            <country>US</country>
+                            <A1>
+                                <xsl:value-of select="$call_state"/>
+                            </A1>
+                            <A3>
+                                <xsl:value-of select="$call_city"/>
+                            </A3>
+                            <A6>
+                                <xsl:value-of select="$call_streetname"/>
+                            </A6>
+                            <PRD>
+                                <xsl:value-of select="$call_streetDirection"/>
+                            </PRD>
+                            <STS>
+                                <xsl:value-of select="$call_streetType"/>
+                            </STS>
+                            <HNO>
+                                <xsl:value-of select="$call_houseNumber"/>
+                            </HNO>
+                            <LMK>
+                                <xsl:value-of select="$call_Common"/>
+                            </LMK>
+                            <xsl:if test="$call_ZipCode !='' ">
+                                <PC>
+                                    <xsl:value-of select="$call_ZipCode"/>
+                                </PC>
+                            </xsl:if>
+                            <UNIT>
+                                <xsl:value-of select="$call_Suite"/>
+                            </UNIT>
+                        </xsl:if>
+                        <xsl:if test="$call_streetname ='' and $call_ZipCode !='' ">
+                            <PC>
+                                <xsl:value-of select="$call_ZipCode"/>
+                            </PC>
+                        </xsl:if>
+                        <ADDCODE>
+                            <xsl:for-each select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments' ]/*[local-name()='Department' and child::*[local-name()='DepartmentID' and text()=$department_id] ]/*[contains(local-name(), 'ZoneFieldLevel') and text()!='']">
+                                <xsl:if test="position() = last()">
+                                    <xsl:value-of select="."/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </ADDCODE>
+                    </civicAddress>
+                    
+                    <xsl:variable name="AdditionalData">    
+                        <xsl:variable name="GEO_Hydrants1" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData' and child::*[local-name()='Sequence' and text()=1] and child::*[local-name()='ContentType' and text()='GEO_Hydrants']]"/>
+                        <xsl:variable name="GEO_Hydrants2" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData' and child::*[local-name()='Sequence' and text()=2] and child::*[local-name()='ContentType' and text()='GEO_Hydrants']]"/>
+                        <xsl:variable name="GEO_Hydrants3" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData' and child::*[local-name()='Sequence' and text()=3] and child::*[local-name()='ContentType' and text()='GEO_Hydrants']]"/>
+                        <xsl:if test="$GEO_Hydrants1!=''">
+                            <HydrantLoc1 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="concat($GEO_Hydrants1/s0:Name,' ',$GEO_Hydrants1/s0:Type,' ',$GEO_Hydrants1/s0:Description)"/>
+                            </HydrantLoc1>
+                        </xsl:if>
+                        <xsl:if test="$GEO_Hydrants2!=''">
+                            <HydrantLoc2 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="concat($GEO_Hydrants2/s0:Name,' ',$GEO_Hydrants2/s0:Type,' ',$GEO_Hydrants2/s0:Description)"/>
+                            </HydrantLoc2>
+                        </xsl:if>
+                        <xsl:if test="$GEO_Hydrants3!=''">
+                            <HydrantPlus xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">Additional Hydrant Information Available - Please contact Dispatch</HydrantPlus>
+                        </xsl:if>
+                        <xsl:variable name="GEO_SpecialInstructions1" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData' and child::*[local-name()='Sequence' and text()=1] and child::*[local-name()='ContentType' and text()='GEO_SpecialInstructions']]"/>
+                        <xsl:variable name="GEO_SpecialInstructions2" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData' and child::*[local-name()='Sequence' and text()=2] and child::*[local-name()='ContentType' and text()='GEO_SpecialInstructions']]"/>
+                        <xsl:variable name="GEO_SpecialInstructions3" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData' and child::*[local-name()='Sequence' and text()=3] and child::*[local-name()='ContentType' and text()='GEO_SpecialInstructions']]"/>
+                        <xsl:if test="$GEO_SpecialInstructions1!=''">
+                            <SpecialInfo1 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="concat($GEO_SpecialInstructions1/s0:Name,' ',$GEO_SpecialInstructions1/s0:Type,' ',$GEO_SpecialInstructions1/s0:Description)"/>
+                            </SpecialInfo1>
+                        </xsl:if>
+                        <xsl:if test="$GEO_SpecialInstructions2!=''">
+                            <SpecialInfo2 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="concat($GEO_SpecialInstructions2/s0:Name,' ',$GEO_SpecialInstructions2/s0:Type,' ',$GEO_SpecialInstructions2/s0:Description)"/>
+                            </SpecialInfo2>
+                        </xsl:if>
+                        <xsl:if test="$GEO_SpecialInstructions3!=''">
+                            <SpecialInfoplus xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">Additional Special Information Available - Please contact Dispatch</SpecialInfoplus>
+                        </xsl:if>
+                        <xsl:variable name="GEO_Hazards1" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData' and child::*[local-name()='Sequence' and text()=1] and child::*[local-name()='ContentType' and text()='GEO_Hazards']]"/>
+                        <xsl:variable name="GEO_Hazards2" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData' and child::*[local-name()='Sequence' and text()=2] and child::*[local-name()='ContentType' and text()='GEO_Hazards']]"/>
+                        <xsl:variable name="GEO_Hazards3" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData' and child::*[local-name()='Sequence' and text()=3] and child::*[local-name()='ContentType' and text()='GEO_Hazards']]"/>
+                        <xsl:if test="$GEO_Hazards1!=''">
+                            <Hazard1 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="concat($GEO_Hazards1/s0:Name,' ',$GEO_Hazards1/s0:Type,' ',$GEO_Hazards1/s0:Description)"/>
+                            </Hazard1>
+                        </xsl:if>
+                        <xsl:if test="$GEO_Hazards2!=''">
+                            <Hazard2 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="concat($GEO_Hazards2/s0:Name,' ',$GEO_Hazards2/s0:Type,' ',$GEO_Hazards2/s0:Description)"/>
+                            </Hazard2>
+                        </xsl:if>
+                        <xsl:if test="$GEO_Hazards3!=''">
+                            <HazardPlus xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">Additional Hazard Information Available - Please contact Dispatch</HazardPlus>
+                        </xsl:if>
+                        <xsl:variable name="GEO_RoutingInstructions1" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData' and child::*[local-name()='Sequence' and text()=1] and child::*[local-name()='ContentType' and text()='GEO_RoutingInstructions']]"/>
+                        <xsl:variable name="GEO_RoutingInstructions2" select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData' and child::*[local-name()='Sequence' and text()=2] and child::*[local-name()='ContentType' and text()='GEO_RoutingInstructions']]"/>
+                        
+                        <xsl:if test="$GEO_RoutingInstructions1!=''">
+                            <Routing1 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="concat($GEO_RoutingInstructions1/s0:Name,' ',$GEO_RoutingInstructions1/s0:Type,' ',$GEO_RoutingInstructions1/s0:Description)"/>
+                            </Routing1>
+                        </xsl:if>
+                       
+                        <xsl:if test="$GEO_RoutingInstructions2!=''">
+                            <RoutingPlus xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">Additional Routing Information Available - Please contact Dispatch</RoutingPlus>
+                        </xsl:if>
+                        <xsl:variable name="SafetyInfo1">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='Details']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$SafetyInfo1 !=''">
+                            <SafetyInfo1 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$SafetyInfo1"/>
+                            </SafetyInfo1>
+                        </xsl:if>
+                        <xsl:variable name="SafetyInfo2">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='ExtraInfo']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$SafetyInfo2 !=''">
+                            <SafetyInfo2 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$SafetyInfo2"/>
+                            </SafetyInfo2>
+                        </xsl:if>
+                        <xsl:variable name="SafetyInfo3">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='LifeSafetyComments']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$SafetyInfo3 !=''">
+                            <SafetyInfo3 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$SafetyInfo3"/>
+                            </SafetyInfo3>
+                        </xsl:if>
+                        <xsl:variable name="BldngInfo1">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='BuildingComments']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$BldngInfo1 !=''">
+                            <BldngInfo1 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$BldngInfo1"/>
+                            </BldngInfo1>
+                        </xsl:if>
+                        <xsl:variable name="BldngInfo2">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='Occupancy']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$BldngInfo2 !=''">
+                            <BldngInfo2 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$BldngInfo2"/>
+                            </BldngInfo2>
+                        </xsl:if>
+                        <xsl:variable name="BldngInfo3">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='Construction']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$BldngInfo3 !=''">
+                            <BldngInfo3 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$BldngInfo3"/>
+                            </BldngInfo3>
+                        </xsl:if>
+                        <xsl:variable name="BldngInfo4">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='RoofType']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$BldngInfo4 !=''">
+                            <BldngInfo4 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$BldngInfo4"/>
+                            </BldngInfo4>
+                        </xsl:if>
+                        <xsl:variable name="BldngInfo5">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='Elevators']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$BldngInfo5 !=''">
+                            <BldngInfo5 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$BldngInfo5"/>
+                            </BldngInfo5>
+                        </xsl:if>
+                        <xsl:variable name="BldngInfo6">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='Stairwells']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$BldngInfo6 !=''">
+                            <BldngInfo6 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$BldngInfo6"/>
+                            </BldngInfo6>
+                        </xsl:if>
+                        <xsl:variable name="BldngInfo7">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='BuildSize']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$BldngInfo7 !=''">
+                            <BldngInfo7 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$BldngInfo7"/>
+                            </BldngInfo7>
+                        </xsl:if>
+                        <xsl:variable name="BldngInfo8">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='Exposures']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$BldngInfo8 !=''">
+                            <BldngInfo8 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$BldngInfo8"/>
+                            </BldngInfo8>
+                        </xsl:if>
+                        <xsl:variable name="BldngInfo9">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='AccessInfo']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$BldngInfo9 !=''">
+                            <BldngInfo9 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$BldngInfo9"/>
+                            </BldngInfo9>
+                        </xsl:if>
+                        <xsl:variable name="BldngInfo10">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='CompanyOfficer']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$BldngInfo10 !=''">
+                            <BldngInfo10 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$BldngInfo10"/>
+                            </BldngInfo10>
+                        </xsl:if>
+                        <xsl:variable name="FireInfo1">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='Sprinklers']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$FireInfo1 !=''">
+                            <FireInfo1 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$FireInfo1"/>
+                            </FireInfo1>
+                        </xsl:if>
+                        <xsl:variable name="FireInfo2">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='Standpipe']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$FireInfo2 !=''">
+                            <FireInfo2 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$FireInfo2"/>
+                            </FireInfo2>
+                        </xsl:if>
+                        <xsl:variable name="FireInfo3">
+                            <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='FireSuppressionComments']/../*[local-name()='FieldValue']"/>
+                        </xsl:variable>
+                        <xsl:if test="$FireInfo3 !=''">
+                            <FireInfo3 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$FireInfo3"/>
+                            </FireInfo3>
+                        </xsl:if>
+                        <xsl:variable name="FireInfo4">
+                            <xsl:choose>
+                                <xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='FireFlow100Involved']/../*[local-name()='FieldValue']!=''">
+                                    <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='FireFlow100Involved']/../*[local-name()='FieldValue']"/>
+                                </xsl:when>
+                                <xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='FireFlow75Involved']/../*[local-name()='FieldValue']!=''">
+                                    <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='FireFlow75Involved']/../*[local-name()='FieldValue']"/>
+                                </xsl:when>
+                                <xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='FireFlow50Involved']/../*[local-name()='FieldValue']!=''">
+                                    <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='FireFlow50Involved']/../*[local-name()='FieldValue']"/>
+                                </xsl:when>
+                                <xsl:when test="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='FireFlow25Involved']/../*[local-name()='FieldValue']!=''">
+                                    <xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='Call']/*[local-name()='EventLocationData']/*[local-name()='LocationData']/*[local-name()='ContentType' and text()='GEO_PrePlans']/../*[local-name()='LocationAdditionalData']/*[local-name()='FieldName' and text()='FireFlow25Involved']/../*[local-name()='FieldValue']"/>
+                                </xsl:when>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:if test="$FireInfo4 !=''">
+                            <FireInfo4 xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                                <xsl:value-of select="$FireInfo4"/>
+                            </FireInfo4>
+                        </xsl:if>
+                        </xsl:variable>
+                        <xsl:if test="$AdditionalData!=''">
+                          <AdditionalDataAssociatedWithaLocation xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:AddData">
+                           <xsl:copy-of select="$AdditionalData"/>
+                           </AdditionalDataAssociatedWithaLocation>
+                        </xsl:if>
+                   
+                </gp:location-info>
+                <gp:usage-rules/>
+            </gp:geopriv>
+        </xsl:element>
+    </xsl:template>

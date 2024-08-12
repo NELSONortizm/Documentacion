@@ -1,0 +1,27 @@
+<xsl:template name="SetDropOffAddress">
+  <xsl:param name="Node"/>
+  <xsl:param name="Status"/>
+  <xsl:param name="SortOrder" />
+	<xsl:element name="{$Node}">
+		<xsl:for-each select="./s0:UnitStatus/s0:Status[contains($Status, concat('*',text(),'*'))]/.." >
+			<xsl:sort select="./s0:Sequence" order="{$SortOrder}" data-type="number" />
+			<xsl:if test="position() = 1">
+				<xsl:element name="StreetAddress">
+					<xsl:value-of select="./s0:FullAddress" />
+				</xsl:element>
+				<xsl:element name="ZipCode">
+					<xsl:value-of select="./s0:ZipCode" />
+				</xsl:element>
+				<xsl:element name="City">
+					<xsl:value-of select="./s0:City" />
+				</xsl:element>
+				<xsl:element name="FacilityName">
+					<xsl:value-of select="./s0:CommonName" />
+				</xsl:element>
+				<xsl:element name="Zone">
+					<xsl:value-of select="./s0:LocationArea" />
+				</xsl:element>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:element>
+</xsl:template>

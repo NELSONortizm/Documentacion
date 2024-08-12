@@ -1,0 +1,48 @@
+1. propiedades, se cargan en load, save
+
+2. DISASSEMBLE public void Disassemble(Microsoft.BizTalk.Component.Interop.IPipelineContext pContext, Microsoft.BizTalk.Message.Interop.IBaseMessage pInMsg)
+
+2.1 Obtiene el mensaje ObtenerMensaje(pInMsg)
+2.2 PromoverMessageType(pInMsg, Mensaje): se promueve la propiedad MessageType
+2.3 AgregarParametrosAdicionales(Mensaje) 
+    lee lo que llega en el nodo <AdditionalParameters> hace split y crea el nodo valor según el valor de la propiedad del pipeline XPathNodeToInsertAdditionalParameters
+2.4 GenerarMensajesPorDestino(pContext, pInMsg, Mensaje, MessageType);
+    Toma el listado de agencias del documento XML nod agencias
+	Tola el listado de departamentos del documento XMl nodo departamentos
+	Se hace un for de acuerdo al número de agencias y se llama a EvaluarDestinos
+2.4.1 EvaluarDestinos(IPipelineContext pContext, IBaseMessage pInMsg, XmlDocument Mensaje, string agencyID, string departmentName, string   MessageType)
+     2.4.1.1 creo una lista de los destinos (zoll, sms, smtp) llamando a ConfigReaderStatic.ObtenerDestinos(agencyID, departmentName, MessageType);
+	  public class Destino
+    {
+        public Destino();
+
+        public string DestinoID { get; set; }
+        public string EndPointID { get; set; }
+        public string XpathCondicion { get; set; }
+        public string XpathCondicionUltimaUnidad { get; set; }
+        public string XpathUltimaUnidadModificada { get; set; }
+    }	 
+	 2.4.1.2 EsDestinoValido(Mensaje, destino, agencyID, departmentName) : verifica si los destinos son válidos según xpath
+	         Este metodo reemplaza el valor **AgencyID** **DepartmentName** de destino.XpathCondicion y lo evalua si es verdadero resultadoCondicion=true
+			 Luego reemplaza **AgencyID** **DepartmentName** en el xpath de XpathUltimaUnidadModificada el cual saca un listado de los valores de unit.status los válida para determinar el último status
+			 luego xpath = destino.XpathCondicionUltimaUnidad.Replace("**AgencyID**", AgencyID).Replace("**DepartmentName**", departmentName);
+			 y si es verdadero resultadoUltimaUnidad = true
+			 Devuelve el resultado booleano return (resultadoCondicion && resultadoUltimaUnidad);
+	2.4.1.3 Si EsDestinoValido es verdadero entonces
+           	ActualizarEncabezado(Mensaje, destino, agencyID, departmentName);
+	        Actualiza los el valor de los nodos XpathHeaderTarget, XpathHeaderAgencyName XpathHeaderDepartmentName XpathHeaderEndPoint
+			<Header xmlns="">
+				<Source>CAD</Source>
+				<AgencyName/>
+				<DepartmentName/>
+				<Target/>
+				<EndPoint/>
+			</Header>
+    2.4.1.4 IBaseMessage MensajeNuevo = DuplicarMensaje(Mensaje, pInMsg, pContext);
+	
+3. GetNext(Microsoft.BizTalk.Component.Interop.IPipelineContext pContext)
+			 
+			 
+	 
+
+

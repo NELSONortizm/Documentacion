@@ -1,0 +1,5 @@
+busque el pid del proceso en task manager Details
+
+luego en consola escriba:
+
+taskill /f /pid 17576

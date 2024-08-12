@@ -1,0 +1,121 @@
+<xsl:template name="SetData">
+<xsl:param name="Jurisdiction" />
+<xsl:param name="UserId" />
+<xsl:param name="WorkStationId" />
+<ns0:Process911Data xmlns:ns0="http://tempuri.org/" xmlns:ns1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+	<ns0:data>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>Phone</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:PhoneDetails/s0:PhoneNumber" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>FirstName</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:CallerDetails/s0:FirstName" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>MiddleName</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:CallerDetails/s0:MiddleName" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>LastName</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:CallerDetails/s0:LastName" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>FamilyName</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:CallerDetails/s0:FamilyName" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>FullAddress</ns1:Key>
+			<ns1:Value><xsl:value-of select="normalize-space(/s0:CallData/s0:Location/s0:Address)" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>City</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:Location/s0:City" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>State</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:Location/s0:State" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>ZipCode</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:Location/s0:ZipCode" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>Area</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:Location/s0:Area" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>Suite</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:Location/s0:Suite" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>SSN</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:Location/s0:ESN" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>PhoneArea</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:PhoneDetails/s0:PhoneArea" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>Extension</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:PhoneDetails/s0:Extension" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>Suffix</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:CallerDetails/s0:Suffix" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>Latitude</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:Location/s0:Latitude" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>Longitude</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:Location/s0:Longitude" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>WorkStationID</ns1:Key>
+			<ns1:Value><xsl:value-of select="$WorkStationId" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>userid</ns1:Key>
+			<ns1:Value><xsl:value-of select="$UserId" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>jurisdiction</ns1:Key>
+			<ns1:Value><xsl:value-of select="$Jurisdiction" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>PhoneCallType</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:PhoneDetails/s0:PhoneCallType" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>		
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>Elevation</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:Location/s0:Elevation" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>CommonName</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:CallerDetails/s0:CommonName" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>ReceivedDate</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:AdditionalData/s0:ReceivedDate" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>ReceivedTime</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:AdditionalData/s0:ReceivedTime" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>Carrier</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:AdditionalData/s0:Carrier" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>ConfidenceFactor</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:AdditionalData/s0:ConfidenceFactor" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+		<ns1:KeyValueOfstringstring>
+			<ns1:Key>ConfidencePercentage</ns1:Key>
+			<ns1:Value><xsl:value-of select="/s0:CallData/s0:AdditionalData/s0:ConfidencePercentage" /></ns1:Value>
+		</ns1:KeyValueOfstringstring>
+	</ns0:data>
+</ns0:Process911Data>
+</xsl:template>

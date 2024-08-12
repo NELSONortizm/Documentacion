@@ -1,0 +1,15 @@
+One-way Receive Port:
+
+End system –> Receive Adapter –> Receive Pipeline –> Inbound Map –> Message Box
+
+Request Response Receive Port:
+
+End system –> Adapter –> Receive Pipeline –> Inbound Map -> Message Box -> Outbound Map –> Send Pipeline –> Adapter –> End System
+
+One-way Send Port (static and dynamic):
+
+Message Box –> Outbound Map –> Send Pipeline –> Send Adapter –> End System
+
+Request Response Send Port (static and dynamic):
+
+Message Box-> Outbound Map –> Send Pipeline –> Adapter -> End system –> Adapter –> Receive Pipeline –> Inbound Map -> Message Box

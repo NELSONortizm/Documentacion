@@ -1,0 +1,17 @@
+**Xfield2 adashi
+
+<xsl:template name="Temp_Xfield2">
+	<xsl:param name="DepartmentParam"/>
+	<xsl:element name="Xfield2">
+		<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments' ]/*[local-name()='Department' and child::*[local-name()='DepartmentID' and text()=$DepartmentParam] ]/*[contains(local-name(), 'ZoneFieldLevel2') and text()!='']"/>
+	</xsl:element>
+</xsl:template>
+
+**Xfield4
+
+<xsl:template name="Temp_Xfield4">
+	<xsl:param name="DepartmentParam"/>
+	<xsl:element name="Xfield4">
+		<xsl:value-of select="/*[local-name()='CAD_Message']/*[local-name()='Body']/*[local-name()='CallEntry']/*[local-name()='AssociatedDepartments' ]/*[local-name()='Department' and child::*[local-name()='DepartmentID' and text()=$DepartmentParam] ]/*[contains(local-name(), 'ZoneFieldLevel3') and text()!='']"/>
+	</xsl:element>
+</xsl:template>

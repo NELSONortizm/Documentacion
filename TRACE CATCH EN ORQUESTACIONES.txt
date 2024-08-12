@@ -1,0 +1,17 @@
+**TRACECATHC SHAPE
+Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceError(ex,true,gCallToken);
+
+
+**MESSAGEASSIGN SHAPE
+// Create Fault Exception Message
+FaultMsg = Microsoft.Practices.ESB.ExceptionHandling.ExceptionMgmt.CreateFaultMessage();
+FaultMsg.FaultMgsPart.FailureCategory = "Technical";
+FaultMsg.FaultMgsPart.Scope = sScopeName;
+FaultMsg.FaultMgsPart.FaultCode = "EXC_GRL_001";
+FaultMsg.FaultMgsPart.FaultDescription = "Ocurrio una excepcion obteniendo los pasos del Itinerario.";
+FaultMsg.FaultMgsPart.FaultSeverity = Microsoft.Practices.ESB.ExceptionHandling.FaultSeverity.Severe;
+
+Microsoft.Practices.ESB.ExceptionHandling.ExceptionMgmt.AddMessage(FaultMsg, msg_in);
+
+***TRACE END SHAPE
+Microsoft.BizTalk.CAT.BestPractices.Framework.Instrumentation.TraceManager.WorkflowComponent.TraceEndScope(sScopeName, iScopeStarted, gCallToken);
